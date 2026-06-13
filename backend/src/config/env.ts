@@ -12,5 +12,6 @@ export const env = {
     user: process.env.DB_USER || 'madinda',
     password: process.env.DB_PASSWORD || 'madinda123',
     database: process.env.DB_NAME || 'madinda_budget',
+    ssl: process.env.DB_SSL === 'true',
   },
 } as const;
