@@ -145,4 +145,10 @@ docker compose up -d database
 
 ---
 
+## Déploiement
+
+- **Frontend (Vercel)** : [https://madinda-app-manger.vercel.app](https://madinda-app-manger.vercel.app)
+- **Backend API** : accessible via `/_/backend/api` sur le même domaine
+- **GitHub** : [https://github.com/Wabtechs/-MADINDA-Family-Budget](https://github.com/Wabtechs/-MADINDA-Family-Budget)
+
 Projet développé dans le cadre du mémoire "Développement d'une application Android hybride pour le suivi des dépenses familiales — Cas de la famille MADINDA".
