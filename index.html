@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <script>
+      (function() {
+        var theme = localStorage.getItem('madinda-theme');
+        if (!theme) {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="MADINDA Family Budget - Maîtrisez vos dépenses familiales simplement. Application intelligente de gestion budgétaire familiale." />
+    <meta name="keywords" content="budget familial, gestion dépenses, application famille, finances personnelles" />
+    <meta property="og:title" content="MADINDA Family Budget" />
+    <meta property="og:description" content="Maîtrisez vos dépenses familiales simplement" />
+    <meta property="og:type" content="website" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <title>MADINDA Family Budget - Gestion des dépenses familiales</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,61 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    environment:
+      - VITE_API_URL=http://localhost:3000/api
+    depends_on:
+      - backend
+    networks:
+      - madinda-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - JWT_SECRET=madinda-super-secret-key-change-in-production
+      - JWT_EXPIRES_IN=7d
+      - DB_HOST=database
+      - DB_PORT=3306
+      - DB_USER=madinda
+      - DB_PASSWORD=madinda123
+      - DB_NAME=madinda_budget
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - madinda-network
+
+  database:
+    image: mariadb:11
+    ports:
+      - "3307:3306"
+    environment:
+      - MARIADB_ROOT_PASSWORD=root123
+      - MARIADB_DATABASE=madinda_budget
+      - MARIADB_USER=madinda
+      - MARIADB_PASSWORD=madinda123
+    volumes:
+      - madinda-db-data:/var/lib/mysql
+      - ./backend/src/database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - madinda-network
+
+volumes:
+  madinda-db-data:
+
+networks:
+  madinda-network:
+    driver: bridge
