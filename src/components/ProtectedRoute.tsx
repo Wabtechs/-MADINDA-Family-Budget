@@ -1,16 +1,18 @@
 import { Navigate } from 'react-router-dom';
-import { useAuthStore } from '../store/authStore';
-import logo from '../assets/logo.png';
+import useAuthStore from '../store/authStore';
+import LoadingSpinner from './ui/LoadingSpinner';
 
-export default function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { token, initialized } = useAuthStore();
+interface ProtectedRouteProps {
+  children: React.ReactNode;
+}
 
-  if (!initialized) {
+export default function ProtectedRoute({ children }: ProtectedRouteProps) {
+  const { token, loading } = useAuthStore();
+
+  if (loading) {
     return (
-      <div className="loader-screen">
-        <img src={logo} alt="MADINDA" className="loader-logo" />
-        <div className="loader-spinner" />
-        <p className="loader-text">Chargement...</p>
+      <div className="d-flex align-items-center justify-content-center min-vh-100">
+        <LoadingSpinner size="lg" text="Chargement..." />
       </div>
     );
   }

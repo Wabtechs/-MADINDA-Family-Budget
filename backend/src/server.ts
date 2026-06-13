@@ -7,18 +7,21 @@ import routes from './routes/index.js';
 const app = express();
 
 app.use(cors({ origin: '*', credentials: true }));
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/api/health', (_req, res) => {
-  res.json({ status: 'ok', version: '1.0.0', app: 'MADINDA Family Budget API' });
+  res.json({ status: 'ok', version: '2.0.0', name: 'MADINDA Family Budget API' });
 });
 
 app.use('/api', routes);
 
 app.use(errorHandler);
 
-app.listen(env.port, () => {
-  console.log(`🚀 MADINDA API running on http://localhost:${env.port}`);
-});
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(env.port, () => {
+    console.log(`🚀 MADINDA v2 API running on http://localhost:${env.port}`);
+  });
+}
 
 export default app;

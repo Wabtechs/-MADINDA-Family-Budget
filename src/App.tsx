@@ -1,56 +1,60 @@
 import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { useAuthStore } from './store/authStore';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import ProtectedRoute from './components/ProtectedRoute';
-import AppLayout from './components/AppLayout';
-import HomePage from './public-pages/Home/HomePage';
-import AboutPage from './public-pages/About/AboutPage';
-import PricingPage from './public-pages/Pricing/PricingPage';
-import DownloadPage from './public-pages/Download/DownloadPage';
-import BlogPage from './public-pages/Blog/BlogPage';
-import LoginPage from './pages/Login/LoginPage';
-import RegisterPage from './pages/Register/RegisterPage';
-import DashboardPage from './pages/Dashboard/DashboardPage';
-import ExpensesPage from './pages/Expenses/ExpensesPage';
-import CategoriesPage from './pages/Categories/CategoriesPage';
-import ReportsPage from './pages/Reports/ReportsPage';
-import ProfilePage from './pages/Profile/ProfilePage';
-import './public-pages/styles/public.css';
-import './styles/app.css';
+import useAuthStore from './store/authStore';
+import useEntityStore from './store/entityStore';
 
-function PublicLayout() {
-  return (
-    <>
-      <Header />
-      <main style={{ flex: 1 }}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/features" element={<HomePage />} />
-          <Route path="/pricing" element={<PricingPage />} />
-          <Route path="/download" element={<DownloadPage />} />
-          <Route path="/blog" element={<BlogPage />} />
-          <Route path="/contact" element={<HomePage />} />
-        </Routes>
-      </main>
-      <Footer />
-    </>
-  );
-}
+import PublicLayout from './components/layouts/PublicLayout';
+import AppLayout from './components/layouts/AppLayout';
+import ProtectedRoute from './components/ProtectedRoute';
+
+import LoginPage from './pages/Login';
+import RegisterPage from './pages/Register';
+
+import HomePage from './pages/public/Home';
+import FeaturesPage from './pages/public/Features';
+import HowItWorksPage from './pages/public/HowItWorks';
+import ContactPage from './pages/public/Contact';
+
+import DashboardPage from './pages/app/Dashboard';
+import IncomesPage from './pages/app/Incomes';
+import ExpensesPage from './pages/app/Expenses';
+import AccountsPage from './pages/app/Accounts';
+import TransfersPage from './pages/app/Transfers';
+import BudgetsPage from './pages/app/Budgets';
+import GoalsPage from './pages/app/Goals';
+import DebtsPage from './pages/app/Debts';
+import DocumentsPage from './pages/app/Documents';
+import ReportsPage from './pages/app/Reports';
+import ProfilePage from './pages/app/Profile';
+import NotificationsPage from './pages/app/Notifications';
 
 function App() {
-  const { initialize } = useAuthStore();
+  const loadFromStorage = useAuthStore((s) => s.loadFromStorage);
+  const fetchEntities = useEntityStore((s) => s.fetchEntities);
+  const token = useAuthStore((s) => s.token);
 
   useEffect(() => {
-    initialize();
-  }, [initialize]);
+    loadFromStorage();
+  }, [loadFromStorage]);
+
+  useEffect(() => {
+    if (token) {
+      fetchEntities();
+    }
+  }, [token, fetchEntities]);
 
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
+
+      <Route element={<PublicLayout />}>
+        <Route index element={<HomePage />} />
+        <Route path="features" element={<FeaturesPage />} />
+        <Route path="how-it-works" element={<HowItWorksPage />} />
+        <Route path="contact" element={<ContactPage />} />
+      </Route>
+
       <Route
         path="/app"
         element={
@@ -60,12 +64,18 @@ function App() {
         }
       >
         <Route index element={<DashboardPage />} />
+        <Route path="incomes" element={<IncomesPage />} />
         <Route path="expenses" element={<ExpensesPage />} />
-        <Route path="categories" element={<CategoriesPage />} />
+        <Route path="accounts" element={<AccountsPage />} />
+        <Route path="transfers" element={<TransfersPage />} />
+        <Route path="budgets" element={<BudgetsPage />} />
+        <Route path="goals" element={<GoalsPage />} />
+        <Route path="debts" element={<DebtsPage />} />
+        <Route path="documents" element={<DocumentsPage />} />
         <Route path="reports" element={<ReportsPage />} />
         <Route path="profile" element={<ProfilePage />} />
+        <Route path="notifications" element={<NotificationsPage />} />
       </Route>
-      <Route path="/*" element={<PublicLayout />} />
     </Routes>
   );
 }

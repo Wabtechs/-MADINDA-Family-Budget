@@ -3,18 +3,10 @@ import jwt from 'jsonwebtoken';
 import { env } from '../config/env.js';
 import type { JwtPayload } from '../types/index.js';
 
-declare global {
-  namespace Express {
-    interface Request {
-      user?: JwtPayload;
-    }
-  }
-}
-
-export const authMiddleware = (req: Request, res: Response, next: NextFunction): void => {
+const authMiddleware = (req: Request, res: Response, next: NextFunction): void => {
   const header = req.headers.authorization;
   if (!header || !header.startsWith('Bearer ')) {
-    res.status(401).json({ error: 'Token manquant' });
+    res.status(401).json({ error: { message: 'Token manquant', status: 401 } });
     return;
   }
 
@@ -25,6 +17,9 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction):
     req.user = decoded;
     next();
   } catch {
-    res.status(401).json({ error: 'Token invalide ou expiré' });
+    res.status(401).json({ error: { message: 'Token invalide ou expiré', status: 401 } });
   }
 };
+
+export { authMiddleware };
+export default authMiddleware;

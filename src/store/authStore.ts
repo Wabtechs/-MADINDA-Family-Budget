@@ -6,23 +6,41 @@ interface AuthState {
   user: User | null;
   token: string | null;
   loading: boolean;
-  initialized: boolean;
-  setAuth: (user: User, token: string) => void;
-  logout: () => void;
   login: (email: string, password: string) => Promise<void>;
   register: (nom: string, email: string, password: string) => Promise<void>;
-  initialize: () => Promise<void>;
+  logout: () => void;
+  loadFromStorage: () => Promise<void>;
+  updateProfile: (data: Partial<{ nom: string; email: string; avatar: string; phone: string }>) => Promise<void>;
+  setUser: (user: User) => void;
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
+const useAuthStore = create<AuthState>((set) => ({
   user: null,
   token: localStorage.getItem('madinda-token'),
   loading: false,
-  initialized: false,
 
-  setAuth: (user, token) => {
-    localStorage.setItem('madinda-token', token);
-    set({ user, token, loading: false });
+  login: async (email, password) => {
+    set({ loading: true });
+    try {
+      const { data } = await authApi.login({ email, password });
+      localStorage.setItem('madinda-token', data.token);
+      set({ user: data.user, token: data.token, loading: false });
+    } catch (error) {
+      set({ loading: false });
+      throw error;
+    }
+  },
+
+  register: async (nom, email, password) => {
+    set({ loading: true });
+    try {
+      const { data } = await authApi.register({ nom, email, password });
+      localStorage.setItem('madinda-token', data.token);
+      set({ user: data.user, token: data.token, loading: false });
+    } catch (error) {
+      set({ loading: false });
+      throw error;
+    }
   },
 
   logout: () => {
@@ -30,32 +48,29 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ user: null, token: null });
   },
 
-  login: async (email, password) => {
-    set({ loading: true });
-    const { data } = await authApi.login({ email, password });
-    localStorage.setItem('madinda-token', data.token);
-    set({ user: data.user, token: data.token, loading: false });
-  },
-
-  register: async (nom, email, password) => {
-    set({ loading: true });
-    const { data } = await authApi.register({ nom, email, password });
-    localStorage.setItem('madinda-token', data.token);
-    set({ user: data.user, token: data.token, loading: false });
-  },
-
-  initialize: async () => {
+  loadFromStorage: async () => {
     const token = localStorage.getItem('madinda-token');
     if (!token) {
-      set({ initialized: true });
+      set({ loading: false });
       return;
     }
+    set({ loading: true });
     try {
-      const { data } = await authApi.me();
-      set({ user: data.user, token, initialized: true });
+      const { data } = await authApi.getProfile();
+      set({ user: data.user || data, token, loading: false });
     } catch {
       localStorage.removeItem('madinda-token');
-      set({ user: null, token: null, initialized: true });
+      set({ user: null, token: null, loading: false });
     }
   },
+
+  updateProfile: async (profileData) => {
+    const { data } = await authApi.updateProfile(profileData);
+    set({ user: data.user || data });
+  },
+
+  setUser: (user) => set({ user }),
 }));
+
+export { useAuthStore };
+export default useAuthStore;

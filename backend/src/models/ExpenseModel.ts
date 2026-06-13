@@ -1,102 +1,196 @@
-import type { ResultSetHeader } from 'mysql2';
+import type { ResultSetHeader, RowDataPacket } from 'mysql2';
 import pool from '../config/database.js';
-import type { Expense, ExpenseWithRelations } from '../types/index.js';
 
-export const ExpenseModel = {
-  async create(data: Omit<Expense, 'id' | 'created_at'>): Promise<Expense> {
-    const [result] = await pool.execute(
-      'INSERT INTO expenses (family_id, user_id, category_id, montant, description, date) VALUES (?, ?, ?, ?, ?, ?)',
-      [data.family_id, data.user_id, data.category_id, data.montant, data.description ?? null, data.date],
-    );
-    const insertId = (result as ResultSetHeader).insertId;
-    return this.findById(insertId) as Promise<Expense>;
-  },
+interface ExpenseRow extends RowDataPacket {
+  id: number;
+  entity_id: number;
+  account_id: number;
+  category_id: number;
+  user_id: number;
+  amount: number;
+  description: string | null;
+  date: string;
+  is_recurring: number;
+  recurring_interval: string | null;
+  recurring_end_date: string | null;
+  attachment_url: string | null;
+  created_at: string;
+  updated_at: string;
+  category_name?: string;
+  account_name?: string;
+  user_nom?: string;
+}
 
-  async findById(id: number): Promise<ExpenseWithRelations | null> {
-    const [rows] = await pool.execute(
-      `SELECT e.*, u.nom AS user_nom, c.nom AS category_nom, c.icone AS category_icone
-       FROM expenses e
-       JOIN users u ON e.user_id = u.id
-       JOIN categories c ON e.category_id = c.id
-       WHERE e.id = ?`,
-      [id],
-    );
-    const expenses = rows as ExpenseWithRelations[];
-    return expenses[0] || null;
-  },
+interface ExpenseStatsRow extends RowDataPacket {
+  total: number;
+  count: number;
+}
 
-  async findByFamily(
-    familyId: number,
-    options?: { startDate?: string; endDate?: string; categoryId?: number; userId?: number; limit?: number; offset?: number },
-  ): Promise<ExpenseWithRelations[]> {
-    let sql = `SELECT e.*, u.nom AS user_nom, c.nom AS category_nom, c.icone AS category_icone
+interface ExpenseByCategoryRow extends RowDataPacket {
+  category_name: string;
+  total: number;
+  count: number;
+}
+
+const ExpenseModel = {
+  async findByEntity(
+    entityId: number,
+    filters?: {
+      account_id?: number;
+      category_id?: number;
+      user_id?: number;
+      start_date?: string;
+      end_date?: string;
+      limit?: number;
+      offset?: number;
+    },
+  ): Promise<ExpenseRow[]> {
+    let sql = `SELECT e.*, c.name AS category_name, a.name AS account_name, u.nom AS user_nom
                FROM expenses e
-               JOIN users u ON e.user_id = u.id
                JOIN categories c ON e.category_id = c.id
-               WHERE e.family_id = ?`;
-    const params: (string | number)[] = [familyId];
+               JOIN accounts a ON e.account_id = a.id
+               JOIN users u ON e.user_id = u.id
+               WHERE e.entity_id = ?`;
+    const params: (string | number)[] = [entityId];
 
-    if (options?.startDate) { sql += ' AND e.date >= ?'; params.push(options.startDate); }
-    if (options?.endDate) { sql += ' AND e.date <= ?'; params.push(options.endDate); }
-    if (options?.categoryId) { sql += ' AND e.category_id = ?'; params.push(options.categoryId); }
-    if (options?.userId) { sql += ' AND e.user_id = ?'; params.push(options.userId); }
+    if (filters?.account_id) { sql += ' AND e.account_id = ?'; params.push(filters.account_id); }
+    if (filters?.category_id) { sql += ' AND e.category_id = ?'; params.push(filters.category_id); }
+    if (filters?.user_id) { sql += ' AND e.user_id = ?'; params.push(filters.user_id); }
+    if (filters?.start_date) { sql += ' AND e.date >= ?'; params.push(filters.start_date); }
+    if (filters?.end_date) { sql += ' AND e.date <= ?'; params.push(filters.end_date); }
 
     sql += ' ORDER BY e.date DESC, e.created_at DESC';
 
-    if (options?.limit) { sql += ' LIMIT ?'; params.push(options.limit); }
-    if (options?.offset) { sql += ' OFFSET ?'; params.push(options.offset); }
+    if (filters?.limit) { sql += ' LIMIT ?'; params.push(filters.limit); }
+    if (filters?.offset) { sql += ' OFFSET ?'; params.push(filters.offset); }
 
-    const [rows] = await pool.execute(sql, params);
-    return rows as ExpenseWithRelations[];
+    const [rows] = await pool.execute<ExpenseRow[]>(sql, params);
+    return rows;
   },
 
-  async update(id: number, data: Partial<Omit<Expense, 'id' | 'created_at'>>): Promise<boolean> {
+  async findById(id: number): Promise<ExpenseRow | null> {
+    const [rows] = await pool.execute<ExpenseRow[]>(
+      `SELECT e.*, c.name AS category_name, a.name AS account_name, u.nom AS user_nom
+       FROM expenses e
+       JOIN categories c ON e.category_id = c.id
+       JOIN accounts a ON e.account_id = a.id
+       JOIN users u ON e.user_id = u.id
+       WHERE e.id = ?`,
+      [id],
+    );
+    return rows[0] || null;
+  },
+
+  async create(data: {
+    entity_id: number;
+    account_id: number;
+    category_id: number;
+    user_id: number;
+    amount: number;
+    description?: string | null;
+    date: string;
+    is_recurring?: number;
+    recurring_interval?: string | null;
+    recurring_end_date?: string | null;
+    attachment_url?: string | null;
+  }): Promise<ExpenseRow | null> {
+    const [result] = await pool.execute<ResultSetHeader>(
+      `INSERT INTO expenses (entity_id, account_id, category_id, user_id, amount, description, date, is_recurring, recurring_interval, recurring_end_date, attachment_url)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        data.entity_id,
+        data.account_id,
+        data.category_id,
+        data.user_id,
+        data.amount,
+        data.description ?? null,
+        data.date,
+        data.is_recurring ?? 0,
+        data.recurring_interval ?? null,
+        data.recurring_end_date ?? null,
+        data.attachment_url ?? null,
+      ],
+    );
+    return this.findById(result.insertId);
+  },
+
+  async update(
+    id: number,
+    data: Partial<{
+      account_id: number;
+      category_id: number;
+      amount: number;
+      description: string | null;
+      date: string;
+      is_recurring: number;
+      recurring_interval: string | null;
+      recurring_end_date: string | null;
+      attachment_url: string | null;
+    }>,
+  ): Promise<boolean> {
     const fields: string[] = [];
     const params: (string | number | null)[] = [];
 
-    if (data.montant !== undefined) { fields.push('montant = ?'); params.push(data.montant); }
+    if (data.account_id !== undefined) { fields.push('account_id = ?'); params.push(data.account_id); }
     if (data.category_id !== undefined) { fields.push('category_id = ?'); params.push(data.category_id); }
-    if (data.description !== undefined) { fields.push('description = ?'); params.push(data.description ?? null); }
+    if (data.amount !== undefined) { fields.push('amount = ?'); params.push(data.amount); }
+    if (data.description !== undefined) { fields.push('description = ?'); params.push(data.description); }
     if (data.date !== undefined) { fields.push('date = ?'); params.push(data.date); }
+    if (data.is_recurring !== undefined) { fields.push('is_recurring = ?'); params.push(data.is_recurring); }
+    if (data.recurring_interval !== undefined) { fields.push('recurring_interval = ?'); params.push(data.recurring_interval); }
+    if (data.recurring_end_date !== undefined) { fields.push('recurring_end_date = ?'); params.push(data.recurring_end_date); }
+    if (data.attachment_url !== undefined) { fields.push('attachment_url = ?'); params.push(data.attachment_url); }
 
     if (fields.length === 0) return false;
 
     params.push(id);
-    const [result] = await pool.execute(
+    const [result] = await pool.execute<ResultSetHeader>(
       `UPDATE expenses SET ${fields.join(', ')} WHERE id = ?`,
       params,
     );
-    return (result as ResultSetHeader).affectedRows > 0;
+    return result.affectedRows > 0;
   },
 
   async delete(id: number): Promise<boolean> {
-    const [result] = await pool.execute('DELETE FROM expenses WHERE id = ?', [id]);
-    return (result as ResultSetHeader).affectedRows > 0;
-  },
-
-  async getMonthlyStats(familyId: number, year: number): Promise<{ month: string; total: number }[]> {
-    const [rows] = await pool.execute(
-      `SELECT DATE_FORMAT(date, '%Y-%m') AS month, SUM(montant) AS total
-       FROM expenses e
-       JOIN categories c ON e.category_id = c.id
-       WHERE e.family_id = ? AND YEAR(e.date) = ? AND c.type = 'expense'
-       GROUP BY DATE_FORMAT(date, '%Y-%m')
-       ORDER BY month`,
-      [familyId, year],
+    const [result] = await pool.execute<ResultSetHeader>(
+      'DELETE FROM expenses WHERE id = ?',
+      [id],
     );
-    return rows as { month: string; total: number }[];
+    return result.affectedRows > 0;
   },
 
-  async getCategoryStats(familyId: number, startDate: string, endDate: string): Promise<{ category: string; total: number }[]> {
-    const [rows] = await pool.execute(
-      `SELECT c.nom AS category, SUM(e.montant) AS total
+  async getStats(
+    entityId: number,
+    startDate: string,
+    endDate: string,
+  ): Promise<{
+    total: number;
+    count: number;
+    byCategory: { category_name: string; total: number; count: number }[];
+  }> {
+    const [totalRows] = await pool.execute<ExpenseStatsRow[]>(
+      `SELECT COALESCE(SUM(amount), 0) AS total, COUNT(*) AS count
+       FROM expenses
+       WHERE entity_id = ? AND date BETWEEN ? AND ?`,
+      [entityId, startDate, endDate],
+    );
+
+    const [byCategory] = await pool.execute<ExpenseByCategoryRow[]>(
+      `SELECT c.name AS category_name, COALESCE(SUM(e.amount), 0) AS total, COUNT(*) AS count
        FROM expenses e
        JOIN categories c ON e.category_id = c.id
-       WHERE e.family_id = ? AND e.date BETWEEN ? AND ? AND c.type = 'expense'
-       GROUP BY c.nom
+       WHERE e.entity_id = ? AND e.date BETWEEN ? AND ?
+       GROUP BY c.name
        ORDER BY total DESC`,
-      [familyId, startDate, endDate],
+      [entityId, startDate, endDate],
     );
-    return rows as { category: string; total: number }[];
+
+    return {
+      total: totalRows[0].total,
+      count: totalRows[0].count,
+      byCategory,
+    };
   },
 };
+
+export default ExpenseModel;
