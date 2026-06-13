@@ -1,154 +1,99 @@
-# MADINDA Family Budget
+# MADINDA Family Budget v2
 
-Application de gestion des dépenses familiales — Site vitrine + Application mobile hybride + API REST.
+Plateforme SaaS complète de gestion financière multi-entités (familles, entreprises, associations).
 
-## Architecture
+## Stack
 
-```
-madinda-app-manger/
-├── src/                    # Frontend React + TypeScript
-│   ├── public-pages/       # Site vitrine (landing page)
-│   ├── pages/              # Pages application privée
-│   ├── components/         # Composants partagés
-│   ├── store/              # Zustand (état auth)
-│   ├── services/           # Axios API client
-│   ├── types/              # Types TypeScript
-│   └── styles/             # Styles CSS
-├── backend/                # API Node.js + Express + TypeScript
-│   └── src/
-│       ├── controllers/    # Contrôleurs REST
-│       ├── routes/         # Routes API
-│       ├── models/         # Modèles base de données
-│       ├── middlewares/    # Auth JWT, error handler
-│       └── services/       # Service auth (bcrypt + JWT)
-├── docker-compose.yml      # Déploiement Docker
-├── Dockerfile              # Frontend (Nginx)
-└── nginx.conf              # Configuration proxy
-```
-
-## Stack technique
-
-| Couche | Technologie |
+| Couche | Technologies |
 |--------|-------------|
-| Frontend | React 19, TypeScript, Vite 8 |
+| Frontend | React 19, TypeScript, Vite 8, Tailwind CSS 4, Bootstrap 5 |
 | Backend | Node.js 24, Express 5, TypeScript |
-| Base de données | MariaDB 11 |
+| Base de données | MariaDB / MySQL (Aiven cloud) |
 | Auth | JWT + bcrypt |
 | State | Zustand |
 | API Client | Axios |
 | Charts | Recharts |
-| Déploiement | Docker, Vercel, GitHub |
+| Forms | react-hook-form + zod |
+| Déploiement | Vercel + Aiven |
 
-## Prérequis
+## Fonctionnalités
 
-- Node.js 24+
-- Docker Desktop (pour MariaDB)
-- npm
+### Site vitrine (pages publiques)
+- Page d'accueil avec Hero, Features, Statistiques, Témoignages, FAQ
+- Fonctionnalités détaillées
+- Comment ça marche
+- Contact
+
+### Application privée (14 modules)
+| Module | Description |
+|--------|-------------|
+| Dashboard | Vue globale : solde, revenus/dépenses du mois, graphiques indicateurs |
+| Revenus | CRUD entrées financières avec comptes et catégories |
+| Dépenses | CRUD sorties financières avec pièces justificatives |
+| Comptes | Multi-comptes (banque, Mobile Money, caisse, investissement) |
+| Transferts | Transferts entre comptes avec mise à jour des soldes |
+| Budgets | Budgets mensuels/annuels avec suivi et alertes de dépassement |
+| Objectifs | Objectifs d'épargne avec progression en % |
+| Dettes | Suivi dettes actives/passives avec échéancier de remboursement |
+| Documents | Stockage factures, reçus, contrats |
+| Rapports | Analyses mensuelles/annuelles, export |
+| Notifications | Alertes intelligentes (budget, solde, échéances) |
+| Audit | Traçabilité de toutes les actions |
+| Profil | Gestion du compte et mot de passe |
+| Utilisateurs | Rôles (admin, manager, viewer) par entité |
+
+## Architecture Backend (MVC)
+
+```
+backend/src/
+├── config/          # Configuration (DB, env, CORS)
+├── controllers/     # 14 contrôleurs REST
+├── database/        # Schémas SQL
+├── middlewares/     # Auth JWT + Error handler
+├── models/          # 16 modèles avec requêtes paramétrées
+├── routes/          # 15 fichiers de routes
+├── services/        # 14 services métier
+├── types/           # Types TypeScript
+└── utils/           # Classes d'erreur
+```
+
+## API REST
+
+| Groupe | Routes principales |
+|--------|-------------------|
+| Auth | POST register, login, forgot-password, reset-password, GET me |
+| Entities | CRUD + membres (invitation, rôle) |
+| Accounts | CRUD + transfert entre comptes |
+| Incomes | CRUD + statistiques |
+| Expenses | CRUD + statistiques |
+| Budgets | CRUD |
+| Goals | CRUD |
+| Debts | CRUD + paiements |
+| Documents | CRUD |
+| Notifications | Lister, marquer lu |
+| Dashboard | Vue globale consolidée |
+| Reports | Mensuel, annuel, catégories |
+| Audit | Journal d'audit |
+
+## Déploiement
+
+- **Frontend** : [https://madinda-app-manger.vercel.app](https://madinda-app-manger.vercel.app)
+- **Backend API** : `/_/backend/api` sur le même domaine
+- **GitHub** : [https://github.com/Wabtechs/-MADINDA-Family-Budget](https://github.com/Wabtechs/-MADINDA-Family-Budget)
+- **Base de données** : Aiven MariaDB (cloud)
 
 ## Installation
 
 ```bash
-# 1. Cloner le projet
-git clone <url>
-cd madinda-app-manger
-
-# 2. Installer les dépendances frontend
 npm install
-
-# 3. Installer les dépendances backend
 cd backend && npm install && cd ..
-
-# 4. Démarrer MariaDB avec Docker
-docker compose up -d database
-
-# 5. Lancer le backend
-cd backend && npm run dev
-
-# 6. Lancer le frontend (nouveau terminal)
-cd .. && npm run dev
-```
-
-## Routes
-
-### Site public (accessible sans auth)
-
-| Route | Page |
-|-------|------|
-| `/` | Accueil (Hero, Features, Comment ça marche, FAQ, Contact) |
-| `/about` | À propos |
-| `/features` | Fonctionnalités |
-| `/download` | Téléchargement |
-| `/contact` | Contact |
-
-### Application privée (auth requise)
-
-| Route | Page |
-|-------|------|
-| `/login` | Connexion |
-| `/register` | Inscription |
-| `/app` | Dashboard |
-| `/app/expenses` | Dépenses |
-| `/app/categories` | Catégories |
-| `/app/reports` | Statistiques |
-| `/app/profile` | Profil |
-
-## API Endpoints
-
-| Méthode | Route | Description |
-|---------|-------|-------------|
-| `POST` | `/api/auth/register` | Inscription |
-| `POST` | `/api/auth/login` | Connexion |
-| `GET` | `/api/auth/me` | Profil courant |
-| `GET` | `/api/families` | Liste des familles |
-| `POST` | `/api/families` | Créer une famille |
-| `GET` | `/api/families/:id/members` | Membres d'une famille |
-| `GET` | `/api/expenses` | Liste des dépenses |
-| `POST` | `/api/expenses` | Ajouter une dépense |
-| `PUT` | `/api/expenses/:id` | Modifier une dépense |
-| `DELETE` | `/api/expenses/:id` | Supprimer une dépense |
-| `GET` | `/api/expenses/stats` | Statistiques dashboard |
-| `GET` | `/api/categories` | Catégories |
-| `GET` | `/api/budgets` | Budgets |
-| `POST` | `/api/budgets` | Créer un budget |
-
-## Déploiement Docker
-
-```bash
-docker compose up -d --build
-```
-
-- Frontend : `http://localhost:8080`
-- Backend API : `http://localhost:3000`
-- MariaDB : `localhost:3307`
-
-## Scripts
-
-```bash
-npm run dev        # Démarrer le frontend (Vite)
-npm run build      # Build production
-npm run lint       # Linter ESLint
-npm run preview    # Preview build
+npm run dev          # Frontend Vite
+cd backend && npm run dev  # Backend Express
 ```
 
 ## Base de données
 
-Le schéma MariaDB se trouve dans `backend/src/database/schema.sql`.
-Catégories préremplies : Alimentation, Transport, Logement, Santé, Éducation, Loisirs, etc.
-
-## Problème connu : Docker Desktop
-
-Si Docker Desktop n'est pas démarré, lancez-le manuellement depuis le menu Démarrer, puis :
-
-```bash
-docker compose up -d database
-```
-
----
-
-## Déploiement
-
-- **Frontend (Vercel)** : [https://madinda-app-manger.vercel.app](https://madinda-app-manger.vercel.app)
-- **Backend API** : accessible via `/_/backend/api` sur le même domaine
-- **GitHub** : [https://github.com/Wabtechs/-MADINDA-Family-Budget](https://github.com/Wabtechs/-MADINDA-Family-Budget)
+Le schéma v2 complet (17 tables) se trouve dans `backend/src/database/schema_v2.sql`.
+Catégories par défaut : 6 revenus + 11 dépenses préremplis globalement.
 
 Projet développé dans le cadre du mémoire "Développement d'une application Android hybride pour le suivi des dépenses familiales — Cas de la famille MADINDA".
