@@ -47,19 +47,19 @@ export default function HomePage() {
           backgroundImage: 'radial-gradient(circle at 25% 25%, rgba(255,255,255,0.2) 0%, transparent 50%)',
         }} />
         <div className="container position-relative py-5">
-          <div className="row align-items-center min-vh-75 py-5">
+          <div className="row align-items-center py-5">
             <div className="col-lg-6 py-5">
-              <span className="d-inline-block bg-white bg-opacity-10 text-white rounded-pill px-3 py-1 mb-3 fs-6 fw-semibold backdrop-blur-sm">
+              <span className="d-inline-block bg-white/10 text-white rounded-pill px-3 py-1 mb-3 fs-6 fw-semibold backdrop-blur-sm">
                 🚀 Gestion budgétaire intelligente
               </span>
               <h1 className="display-4 fw-bold mb-3 lh-1">
                 Gérez vos <span className="text-warning">finances familiales</span> intelligemment
               </h1>
-              <p className="lead text-white text-opacity-75 mb-4 lh-lg">
+              <p className="lead text-white/75 mb-4 lh-lg">
                 MADINDA vous aide à suivre vos revenus, contrôler vos dépenses et atteindre vos objectifs financiers en famille.
               </p>
               <div className="d-flex gap-3 flex-wrap">
-                <Link to="/register" className="btn btn-warning btn-lg px-4 fw-semibold shadow-lg hover-scale">
+                <Link to="/register" className="btn btn-warning btn-lg px-4 fw-semibold shadow-lg">
                   Commencer gratuitement
                 </Link>
                 <Link to="/features" className="btn btn-outline-light btn-lg px-4 fw-semibold">
@@ -69,38 +69,38 @@ export default function HomePage() {
               <div className="d-flex gap-4 mt-4 pt-2">
                 <div className="d-flex align-items-center gap-2">
                   <span className="text-warning">✓</span>
-                  <span className="small text-white text-opacity-75">Sans carte bancaire</span>
+                  <span className="small text-white/75">Sans carte bancaire</span>
                 </div>
                 <div className="d-flex align-items-center gap-2">
                   <span className="text-warning">✓</span>
-                  <span className="small text-white text-opacity-75">Annulation gratuite</span>
+                  <span className="small text-white/75">Annulation gratuite</span>
                 </div>
               </div>
             </div>
             <div className="col-lg-6 d-none d-lg-flex justify-content-center pb-5">
-              <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-4 p-4 border border-white border-opacity-20 shadow-2xl" style={{ maxWidth: 480, width: '100%', transform: 'perspective(1000px) rotateY(-5deg)' }}>
+              <div className="bg-white/10 backdrop-blur-sm rounded-4 p-4 border border-white/20 shadow-lg" style={{ maxWidth: 480, width: '100%', transform: 'perspective(1000px) rotateY(-5deg)' }}>
                 <div className="d-flex align-items-center gap-3 mb-4">
                   <div className="bg-warning bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center" style={{ width: 48, height: 48 }}>
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-warning"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                   </div>
                   <div>
                     <div className="fw-semibold text-white">Bienvenue, Famille MADINDA</div>
-                    <div className="text-white text-opacity-60 small">Solde disponible</div>
+                    <div className="text-white/60 small">Solde disponible</div>
                   </div>
                   <div className="ms-auto">
-                    <span className="badge bg-success bg-opacity-25 text-success-light px-2 py-1">En ligne</span>
+                    <span className="badge bg-success/25 text-success px-2 py-1">En ligne</span>
                   </div>
                 </div>
-                <div className="display-5 fw-bold mb-4 text-white">2 450 000 <span className="fs-5 fw-normal text-white text-opacity-70">F CFA</span></div>
+                <div className="display-5 fw-bold mb-4 text-white">2 450 000 <span className="fs-5 fw-normal text-white/70">F CFA</span></div>
                 <div className="d-flex gap-2 mb-4" style={{ height: 90 }}>
                   {[45, 70, 55, 85, 60, 40, 75, 65, 50, 80, 55, 70].map((h, i) => (
-                    <div key={i} className="flex-grow-1 bg-warning bg-opacity-30 rounded-1" style={{ height: `${h}%`, alignSelf: 'flex-end' }} />
+                    <div key={i} className="flex-grow-1 bg-warning/30 rounded-1" style={{ height: `${h}%`, alignSelf: 'flex-end' }} />
                   ))}
                 </div>
                 <div className="d-flex justify-content-between pt-3 border-top border-white border-opacity-20">
-                  <div><div className="fw-bold text-success">+850 000 F</div><div className="small text-white text-opacity-60">Revenus</div></div>
-                  <div><div className="fw-bold text-danger">-420 000 F</div><div className="small text-white text-opacity-60">Dépenses</div></div>
-                  <div><div className="fw-bold text-warning">430 000 F</div><div className="small text-white text-opacity-60">Épargne</div></div>
+                  <div><div className="fw-bold text-success">+850 000 F</div><div className="small text-white/60">Revenus</div></div>
+                  <div><div className="fw-bold text-danger">-420 000 F</div><div className="small text-white/60">Dépenses</div></div>
+                  <div><div className="fw-bold text-warning">430 000 F</div><div className="small text-white/60">Épargne</div></div>
                 </div>
               </div>
             </div>
@@ -112,7 +112,7 @@ export default function HomePage() {
       <section className="py-5 position-relative">
         <div className="container py-5">
           <div className="text-center mb-5">
-            <span className="d-inline-block bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-1 mb-3 fs-6 fw-semibold">Fonctionnalités</span>
+            <span className="d-inline-block bg-primary/10 text-primary rounded-pill px-3 py-1 mb-3 fs-6 fw-semibold">Fonctionnalités</span>
             <h2 className="display-5 fw-bold">Tout ce dont vous avez besoin</h2>
             <p className="lead text-secondary mx-auto" style={{ maxWidth: 600 }}>
               Une suite complète d'outils pour gérer efficacement les finances de votre famille.
@@ -121,7 +121,7 @@ export default function HomePage() {
           <div className="row g-4">
             {features.map((f, i) => (
               <div key={i} className="col-md-6 col-lg-4">
-                <div className="card border-0 h-100 p-3 transition-shadow" style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
+                <div className="card border-0 h-100 p-3" style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
                   <div className="card-body">
                     <div className="fs-1 mb-3">{f.icon}</div>
                     <h5 className="card-title fw-bold">{f.title}</h5>
@@ -137,7 +137,7 @@ export default function HomePage() {
       <section className="py-5 bg-light">
         <div className="container py-5">
           <div className="text-center mb-5">
-            <span className="d-inline-block bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-1 mb-3 fs-6 fw-semibold">Comment ça marche</span>
+            <span className="d-inline-block bg-primary/10 text-primary rounded-pill px-3 py-1 mb-3 fs-6 fw-semibold">Comment ça marche</span>
             <h2 className="display-5 fw-bold">Commencez en 3 étapes</h2>
             <p className="lead text-secondary mx-auto" style={{ maxWidth: 600 }}>
               MADINDA est conçu pour être simple à prendre en main.
@@ -159,13 +159,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="py-5 bg-gradient-to-br from-primary to-primary-dark text-white">
+      <section className="py-5 bg-gradient-to-br from-primary to-slate-800 text-white">
         <div className="container py-4">
           <div className="row g-4 text-center">
             {stats.map((s, i) => (
               <div key={i} className="col-6 col-lg-3">
                 <div className="fw-bold" style={{ fontSize: '2.5rem' }}>{s.value}</div>
-                <div className="text-white text-opacity-75 small text-uppercase tracking-wider">{s.label}</div>
+                <div className="text-white/75 small text-uppercase" style={{ letterSpacing: '0.05em' }}>{s.label}</div>
               </div>
             ))}
           </div>
@@ -175,7 +175,7 @@ export default function HomePage() {
       <section className="py-5">
         <div className="container py-5">
           <div className="text-center mb-5">
-            <span className="d-inline-block bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-1 mb-3 fs-6 fw-semibold">Témoignages</span>
+            <span className="d-inline-block bg-primary/10 text-primary rounded-pill px-3 py-1 mb-3 fs-6 fw-semibold">Témoignages</span>
             <h2 className="display-5 fw-bold">Ce que disent nos utilisateurs</h2>
           </div>
           <div className="row g-4">
@@ -216,7 +216,7 @@ export default function HomePage() {
       <section className="py-5">
         <div className="container py-5" style={{ maxWidth: 700 }}>
           <div className="text-center mb-5">
-            <span className="d-inline-block bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-1 mb-3 fs-6 fw-semibold">FAQ</span>
+            <span className="d-inline-block bg-primary/10 text-primary rounded-pill px-3 py-1 mb-3 fs-6 fw-semibold">FAQ</span>
             <h2 className="display-5 fw-bold">Questions fréquentes</h2>
           </div>
           <div className="d-flex flex-column gap-3">
