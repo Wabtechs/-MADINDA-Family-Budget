@@ -87,7 +87,7 @@ export default function ProfilePage() {
               </div>
               <h5 className="fw-bold mb-1">{user?.nom}</h5>
               <p className="text-secondary small mb-0">{user?.email}</p>
-              <span className="badge bg-primary bg-opacity-10 text-primary mt-2">{user?.role}</span>
+              <span className="badge bg-primary/10 text-primary mt-2">{user?.role}</span>
               <hr />
               <div className="text-start small">
                 <div className="d-flex justify-content-between mb-1">

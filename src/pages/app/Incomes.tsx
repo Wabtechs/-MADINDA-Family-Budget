@@ -147,7 +147,7 @@ export default function IncomesPage() {
         <div className="col-md-4">
           <div className="card border-0 shadow-sm bg-primary text-white">
             <div className="card-body text-center py-3">
-              <div className="text-white text-opacity-75 small text-uppercase fw-semibold">Total (filtr&eacute;)</div>
+              <div className="text-white/75 small text-uppercase fw-semibold">Total (filtr&eacute;)</div>
               <div className="fs-3 fw-bold">&euro;{totalMonth.toFixed(2)}</div>
             </div>
           </div>
@@ -253,7 +253,7 @@ export default function IncomesPage() {
                   <tr key={inc.id}>
                     <td className="text-nowrap small">{new Date(inc.date).toLocaleDateString('fr-FR')}</td>
                     <td className="small">{inc.description || '-'}</td>
-                    <td><span className="badge bg-primary bg-opacity-10 text-primary">{inc.category_name || '-'}</span></td>
+                    <td><span className="badge bg-primary/10 text-primary">{inc.category_name || '-'}</span></td>
                     <td className="small">{inc.account_name || '-'}</td>
                     <td className="text-end fw-bold text-success">&euro;{inc.amount.toFixed(2)}</td>
                     <td className="text-end">

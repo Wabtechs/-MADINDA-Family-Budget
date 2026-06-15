@@ -105,11 +105,11 @@ export default function NotificationsPage() {
             {notifications.map((n) => (
               <div
                 key={n.id}
-                className={`list-group-item list-group-item-action d-flex gap-3 px-4 py-3 border-0 border-bottom ${!n.is_read ? 'bg-primary bg-opacity-5' : ''}`}
+                className={`list-group-item list-group-item-action d-flex gap-3 px-4 py-3 border-0 border-bottom ${!n.is_read ? 'bg-primary/5' : ''}`}
                 style={{ cursor: 'pointer' }}
                 onClick={() => !n.is_read && handleMarkAsRead(n.id)}
               >
-                <div className={`rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 ${typeColors[n.type] || 'bg-secondary'} bg-opacity-10`} style={{ width: 40, height: 40 }}>
+                <div className={`rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 ${typeColors[n.type] || 'bg-secondary'}/10`} style={{ width: 40, height: 40 }}>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`${typeColors[n.type] ? 'text-white' : 'text-secondary'}`}>
                     <path d={typeIcons[n.type] || typeIcons.system} />
                   </svg>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import ThemeToggle from './ThemeToggle';
 
 const navLinks = [
   { to: '/', label: 'Accueil' },
@@ -48,7 +49,8 @@ export default function Header() {
             ))}
           </ul>
 
-          <div className="d-flex gap-2">
+          <div className="d-flex gap-2 align-items-center">
+            <ThemeToggle />
             <Link to="/login" className="btn btn-outline-primary btn-sm px-3" onClick={() => setMenuOpen(false)}>
               Connexion
             </Link>

@@ -244,7 +244,7 @@ export default function DebtsPage() {
                   <div>
                     <h5 className="fw-bold mb-1">{selectedDebt.contact_name}</h5>
                     <span className={`badge ${statusColors[selectedDebt.status]} text-white`}>{statusLabels[selectedDebt.status]}</span>
-                    <span className="badge bg-secondary bg-opacity-10 text-secondary ms-2">{typeLabels[selectedDebt.type]}</span>
+                    <span className="badge bg-secondary/10 text-secondary ms-2">{typeLabels[selectedDebt.type]}</span>
                   </div>
                   <button className="btn btn-sm btn-outline-secondary" onClick={() => setSelectedDebt(null)}>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>

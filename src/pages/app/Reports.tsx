@@ -67,7 +67,7 @@ export default function ReportsPage() {
         <div className="col-md-4">
           <div className="card border-0 shadow-sm bg-primary text-white">
             <div className="card-body text-center py-3">
-              <div className="text-white text-opacity-75 small text-uppercase fw-semibold">Revenus annuels</div>
+              <div className="text-white/75 small text-uppercase fw-semibold">Revenus annuels</div>
               <div className="fs-3 fw-bold">&euro;{totalIncome.toFixed(2)}</div>
             </div>
           </div>
@@ -75,7 +75,7 @@ export default function ReportsPage() {
         <div className="col-md-4">
           <div className="card border-0 shadow-sm bg-danger text-white">
             <div className="card-body text-center py-3">
-              <div className="text-white text-opacity-75 small text-uppercase fw-semibold">D&eacute;penses annuelles</div>
+              <div className="text-white/75 small text-uppercase fw-semibold">D&eacute;penses annuelles</div>
               <div className="fs-3 fw-bold">&euro;{totalExpense.toFixed(2)}</div>
             </div>
           </div>
@@ -83,7 +83,7 @@ export default function ReportsPage() {
         <div className="col-md-4">
           <div className={`card border-0 shadow-sm text-white ${totalProfit >= 0 ? 'bg-success' : 'bg-danger'}`}>
             <div className="card-body text-center py-3">
-              <div className="text-white text-opacity-75 small text-uppercase fw-semibold">R&eacute;sultat net</div>
+              <div className="text-white/75 small text-uppercase fw-semibold">R&eacute;sultat net</div>
               <div className="fs-3 fw-bold">&euro;{totalProfit.toFixed(2)}</div>
             </div>
           </div>

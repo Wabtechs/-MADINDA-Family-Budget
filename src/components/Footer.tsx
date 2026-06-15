@@ -29,10 +29,10 @@ export default function Footer() {
           <div className="col-lg-2 col-md-6">
             <h6 className="fw-bold text-uppercase small mb-3">Liens rapides</h6>
             <ul className="list-unstyled small d-flex flex-column gap-2">
-              <li><Link to="/" className="text-secondary text-decoration-none hover-text-light">Accueil</Link></li>
-              <li><Link to="/features" className="text-secondary text-decoration-none hover-text-light">Fonctionnalités</Link></li>
-              <li><Link to="/how-it-works" className="text-secondary text-decoration-none hover-text-light">Comment ça marche</Link></li>
-              <li><Link to="/contact" className="text-secondary text-decoration-none hover-text-light">Contact</Link></li>
+              <li><Link to="/" className="text-secondary text-decoration-none" style={{ transition: 'color 0.2s' }} onMouseEnter={e => (e.currentTarget.style.color = '#f8f9fa')} onMouseLeave={e => (e.currentTarget.style.color = '')}>Accueil</Link></li>
+              <li><Link to="/features" className="text-secondary text-decoration-none" style={{ transition: 'color 0.2s' }} onMouseEnter={e => (e.currentTarget.style.color = '#f8f9fa')} onMouseLeave={e => (e.currentTarget.style.color = '')}>Fonctionnalités</Link></li>
+              <li><Link to="/how-it-works" className="text-secondary text-decoration-none" style={{ transition: 'color 0.2s' }} onMouseEnter={e => (e.currentTarget.style.color = '#f8f9fa')} onMouseLeave={e => (e.currentTarget.style.color = '')}>Comment ça marche</Link></li>
+              <li><Link to="/contact" className="text-secondary text-decoration-none" style={{ transition: 'color 0.2s' }} onMouseEnter={e => (e.currentTarget.style.color = '#f8f9fa')} onMouseLeave={e => (e.currentTarget.style.color = '')}>Contact</Link></li>
             </ul>
           </div>
 

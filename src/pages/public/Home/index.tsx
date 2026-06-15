@@ -80,7 +80,7 @@ export default function HomePage() {
             <div className="col-lg-6 d-none d-lg-flex justify-content-center pb-5">
               <div className="bg-white/10 backdrop-blur-sm rounded-4 p-4 border border-white/20 shadow-lg" style={{ maxWidth: 480, width: '100%', transform: 'perspective(1000px) rotateY(-5deg)' }}>
                 <div className="d-flex align-items-center gap-3 mb-4">
-                  <div className="bg-warning bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center" style={{ width: 48, height: 48 }}>
+                  <div className="bg-warning/25 rounded-circle d-flex align-items-center justify-content-center" style={{ width: 48, height: 48 }}>
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-warning"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                   </div>
                   <div>
@@ -97,7 +97,7 @@ export default function HomePage() {
                     <div key={i} className="flex-grow-1 bg-warning/30 rounded-1" style={{ height: `${h}%`, alignSelf: 'flex-end' }} />
                   ))}
                 </div>
-                <div className="d-flex justify-content-between pt-3 border-top border-white border-opacity-20">
+                <div className="d-flex justify-content-between pt-3 border-top border-white/20">
                   <div><div className="fw-bold text-success">+850 000 F</div><div className="small text-white/60">Revenus</div></div>
                   <div><div className="fw-bold text-danger">-420 000 F</div><div className="small text-white/60">Dépenses</div></div>
                   <div><div className="fw-bold text-warning">430 000 F</div><div className="small text-white/60">Épargne</div></div>

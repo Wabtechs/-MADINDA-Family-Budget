@@ -154,14 +154,14 @@ export default function AccountsPage() {
               <div className="card border-0 shadow-sm h-100">
                 <div className="card-body">
                   <div className="d-flex align-items-center gap-3 mb-3">
-                    <div className="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center" style={{ width: 44, height: 44 }}>
+                    <div className="rounded-circle bg-primary/10 d-flex align-items-center justify-content-center" style={{ width: 44, height: 44 }}>
                       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d={accountTypeIcons[account.type] || accountTypeIcons.other} />
                       </svg>
                     </div>
                     <div className="flex-grow-1 min-w-0">
                       <h6 className="fw-bold mb-0 text-truncate">{account.name}</h6>
-                      <span className="badge bg-secondary bg-opacity-10 text-secondary" style={{ fontSize: '0.7rem' }}>{accountTypeLabels[account.type] || account.type}</span>
+                      <span className="badge bg-secondary/10 text-secondary" style={{ fontSize: '0.7rem' }}>{accountTypeLabels[account.type] || account.type}</span>
                     </div>
                   </div>
                   {account.bank_name && <p className="small text-secondary mb-2"><span className="fw-semibold">Banque:</span> {account.bank_name}</p>}

@@ -32,7 +32,7 @@ export default function AppLayout() {
       {/* Sidebar overlay */}
       {sidebarOpen && (
         <div
-          className="position-fixed top-0 start-0 w-100 h-100 bg-black bg-opacity-50"
+          className="position-fixed top-0 start-0 w-100 h-100 bg-black/50"
           style={{ zIndex: 1040 }}
           onClick={() => setSidebarOpen(false)}
         />
@@ -86,7 +86,7 @@ export default function AppLayout() {
                   end={item.end}
                   className={({ isActive }) =>
                     `nav-link d-flex align-items-center gap-3 px-3 py-2 mx-2 rounded-2 ${
-                      isActive ? 'bg-primary text-white' : 'text-light text-opacity-75 hover-bg-secondary'
+                      isActive ? 'bg-primary text-white' : 'text-light'
                     }`
                   }
                   onClick={() => setSidebarOpen(false)}
@@ -102,13 +102,13 @@ export default function AppLayout() {
         </nav>
 
         <div className="p-3 border-top border-secondary">
-          <div className="d-flex align-items-center gap-2 text-light text-opacity-75 small">
+          <div className="d-flex align-items-center gap-2 small" style={{ color: 'rgba(248, 249, 250, 0.75)' }}>
             <div className="bg-secondary rounded-circle d-flex align-items-center justify-content-center" style={{ width: 32, height: 32 }}>
               <span className="fw-bold text-white small">{(user?.nom || 'U')[0]}</span>
             </div>
             <div className="flex-grow-1 text-truncate">
               <div className="fw-semibold text-white">{user?.nom}</div>
-              <div className="text-light text-opacity-50" style={{ fontSize: '0.75rem' }}>{user?.email}</div>
+              <div style={{ fontSize: '0.75rem', color: 'rgba(248, 249, 250, 0.5)' }}>{user?.email}</div>
             </div>
           </div>
         </div>

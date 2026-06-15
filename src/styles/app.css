@@ -799,6 +799,34 @@
   50% { transform: scale(1.05); opacity: 0.8; }
 }
 
+/* =============================================
+   THEME TOGGLE BUTTON
+   ============================================= */
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.theme-toggle:hover {
+  background: var(--surface-hover);
+  color: var(--primary);
+}
+
+.theme-toggle svg {
+  width: 20px;
+  height: 20px;
+}
+
 @media (max-width: 480px) {
   .stats-cards { grid-template-columns: 1fr 1fr; }
   .stats-cards .stat-card:last-child { grid-column: 1 / -1; }
