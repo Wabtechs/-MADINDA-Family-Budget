@@ -2,6 +2,7 @@ import AccountModel from '../models/AccountModel.js';
 import EntityModel from '../models/EntityModel.js';
 import EntityMemberModel from '../models/EntityMemberModel.js';
 import TransactionModel from '../models/TransactionModel.js';
+import TransferModel from '../models/TransferModel.js';
 import AuditService from './AuditService.js';
 import { NotFoundError, ForbiddenError, ValidationError } from '../utils/errors.js';
 
@@ -144,7 +145,10 @@ class AccountService {
       date,
     };
 
-    const transfer = await (await import('../models/TransferModel.js')).default.create(transferData);
+    const transfer = await TransferModel.create(transferData);
+    if (!transfer) {
+      throw new Error("Échec de la création du transfert");
+    }
 
     const transactionOut = await TransactionModel.create({
       entity_id: fromAccount.entity_id,
@@ -152,7 +156,7 @@ class AccountService {
       user_id: userId,
       type: 'transfer_out',
       reference_type: 'transfer',
-      reference_id: transfer!.id,
+      reference_id: transfer.id,
       amount,
       description: `Transfert vers ${toAccount.name}${description ? `: ${description}` : ''}`,
       date,
@@ -164,13 +168,13 @@ class AccountService {
       user_id: userId,
       type: 'transfer_in',
       reference_type: 'transfer',
-      reference_id: transfer!.id,
+      reference_id: transfer.id,
       amount,
       description: `Transfert depuis ${fromAccount.name}${description ? `: ${description}` : ''}`,
       date,
     });
 
-    await AuditService.log(userId, fromAccount.entity_id, 'create', 'transfer', transfer!.id, {
+    await AuditService.log(userId, fromAccount.entity_id, 'create', 'transfer', transfer.id, {
       from_account_id: fromAccountId,
       to_account_id: toAccountId,
       amount,

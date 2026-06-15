@@ -86,16 +86,14 @@ export const AuthController = {
         res.status(400).json({ error: { message: 'Email requis', status: 400 } });
         return;
       }
-
-      const user = await UserModel.findByEmail(email);
-      if (!user) {
+      const result = await AuthService.forgotPassword(email);
+      console.log(`🔐 Reset token for ${result.email}: ${result.token}`);
+      res.status(200).json({ message: 'Si cet email existe, un lien de réinitialisation a été envoyé' });
+    } catch (err: any) {
+      if (err.name === 'NotFoundError') {
         res.status(200).json({ message: 'Si cet email existe, un lien de réinitialisation a été envoyé' });
         return;
       }
-
-      // In production: generate reset token, send email
-      res.status(200).json({ message: 'Si cet email existe, un lien de réinitialisation a été envoyé' });
-    } catch (err: any) {
       res.status(500).json({ error: { message: err.message, status: 500 } });
     }
   },
@@ -111,9 +109,37 @@ export const AuthController = {
         res.status(400).json({ error: { message: 'Le mot de passe doit contenir au moins 6 caractères', status: 400 } });
         return;
       }
+      const result = await AuthService.resetPassword(token, password);
+      res.status(200).json({ data: result, message: 'Mot de passe réinitialisé avec succès' });
+    } catch (err: any) {
+      res.status(400).json({ error: { message: err.message, status: 400 } });
+    }
+  },
 
-      // In production: verify token, find user, update password
-      res.status(200).json({ message: 'Mot de passe réinitialisé avec succès' });
+  async changePassword(req: Request, res: Response): Promise<void> {
+    try {
+      const { current_password, new_password } = req.body;
+      if (!current_password || !new_password) {
+        res.status(400).json({ error: { message: 'current_password et new_password requis', status: 400 } });
+        return;
+      }
+      if (new_password.length < 6) {
+        res.status(400).json({ error: { message: 'Le nouveau mot de passe doit contenir au moins 6 caractères', status: 400 } });
+        return;
+      }
+      const user = await UserModel.findById(req.user!.userId);
+      if (!user) {
+        res.status(404).json({ error: { message: 'Utilisateur non trouvé', status: 404 } });
+        return;
+      }
+      const valid = await bcrypt.compare(current_password, user.password);
+      if (!valid) {
+        res.status(400).json({ error: { message: 'Mot de passe actuel incorrect', status: 400 } });
+        return;
+      }
+      const hashed = await bcrypt.hash(new_password, 12);
+      await UserModel.updatePassword(req.user!.userId, hashed);
+      res.status(200).json({ message: 'Mot de passe modifié avec succès' });
     } catch (err: any) {
       res.status(400).json({ error: { message: err.message, status: 400 } });
     }

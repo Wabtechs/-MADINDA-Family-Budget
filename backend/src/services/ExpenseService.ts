@@ -151,7 +151,8 @@ class ExpenseService {
         await AccountModel.updateBalance(newAccountId, newBalance);
       }
 
-      await TransactionModel.create({
+      const existingTxs = await TransactionModel.findByReference('expense', expenseId);
+      const transactionData = {
         entity_id: expense.entity_id,
         account_id: newAccountId,
         user_id: userId,
@@ -161,7 +162,13 @@ class ExpenseService {
         amount: newAmount,
         description: data.description ?? expense.description ?? 'Dépense',
         date: data.date ?? expense.date,
-      });
+      };
+
+      if (existingTxs.length > 0) {
+        await TransactionModel.update(existingTxs[0].id, transactionData);
+      } else {
+        await TransactionModel.create(transactionData);
+      }
     }
 
     await AuditService.log(userId, expense.entity_id, 'update', 'expense', expenseId, {

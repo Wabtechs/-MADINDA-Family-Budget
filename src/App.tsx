@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import useAuthStore from './store/authStore';
 import useEntityStore from './store/entityStore';
+import PWAUpdatePrompt from './components/PWAUpdatePrompt';
 
 import PublicLayout from './components/layouts/PublicLayout';
 import AppLayout from './components/layouts/AppLayout';
@@ -44,7 +45,9 @@ function App() {
   }, [token, fetchEntities]);
 
   return (
-    <Routes>
+    <>
+      <PWAUpdatePrompt />
+      <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
 
@@ -76,7 +79,8 @@ function App() {
         <Route path="profile" element={<ProfilePage />} />
         <Route path="notifications" element={<NotificationsPage />} />
       </Route>
-    </Routes>
+      </Routes>
+    </>
   );
 }
 

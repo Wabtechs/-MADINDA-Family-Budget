@@ -63,7 +63,7 @@ export default function ProfilePage() {
     setPasswordSuccess('');
     setPasswordError('');
     try {
-      await authApi.updateProfile({ current_password: data.current_password, new_password: data.new_password } as any);
+      await authApi.changePassword({ current_password: data.current_password, new_password: data.new_password });
       setPasswordSuccess('Mot de passe modifié avec succès.');
       passwordForm.reset({ current_password: '', new_password: '', confirm: '' });
     } catch {

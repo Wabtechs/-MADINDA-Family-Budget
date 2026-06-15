@@ -17,7 +17,7 @@ interface AuthState {
 const useAuthStore = create<AuthState>((set) => ({
   user: null,
   token: localStorage.getItem('madinda-token'),
-  loading: false,
+  loading: !!localStorage.getItem('madinda-token'),
 
   login: async (email, password) => {
     set({ loading: true });

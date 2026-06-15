@@ -1,45 +1,41 @@
-import type { Request, Response } from 'express';
-import NotificationModel from '../models/NotificationModel.js';
+import type { Request, Response, NextFunction } from 'express';
+import NotificationService from '../services/NotificationService.js';
 
 export const NotificationController = {
-  async list(req: Request, res: Response): Promise<void> {
+  async list(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const unreadOnly = req.query.unread_only === 'true';
-      const notifications = await NotificationModel.findByUser(req.user!.userId, unreadOnly);
+      const notifications = await NotificationService.list(req.user!.userId, unreadOnly);
       res.status(200).json({ data: notifications });
-    } catch (err: any) {
-      res.status(500).json({ error: { message: err.message, status: 500 } });
+    } catch (err) {
+      next(err);
     }
   },
 
-  async markAsRead(req: Request, res: Response): Promise<void> {
+  async markAsRead(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const updated = await NotificationModel.markAsRead(Number(req.params.id));
-      if (!updated) {
-        res.status(404).json({ error: { message: 'Notification non trouvée', status: 404 } });
-        return;
-      }
+      await NotificationService.markAsRead(Number(req.params.id), req.user!.userId);
       res.status(200).json({ message: 'Notification marquée comme lue' });
-    } catch (err: any) {
-      res.status(500).json({ error: { message: err.message, status: 500 } });
+    } catch (err) {
+      next(err);
     }
   },
 
-  async markAllAsRead(req: Request, res: Response): Promise<void> {
+  async markAllAsRead(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      await NotificationModel.markAllAsRead(req.user!.userId);
+      await NotificationService.markAllAsRead(req.user!.userId);
       res.status(200).json({ message: 'Toutes les notifications marquées comme lues' });
-    } catch (err: any) {
-      res.status(500).json({ error: { message: err.message, status: 500 } });
+    } catch (err) {
+      next(err);
     }
   },
 
-  async unreadCount(req: Request, res: Response): Promise<void> {
+  async unreadCount(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const count = await NotificationModel.getUnreadCount(req.user!.userId);
+      const count = await NotificationService.getUnreadCount(req.user!.userId);
       res.status(200).json({ data: { count } });
-    } catch (err: any) {
-      res.status(500).json({ error: { message: err.message, status: 500 } });
+    } catch (err) {
+      next(err);
     }
   },
 };

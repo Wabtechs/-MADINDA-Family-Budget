@@ -90,6 +90,41 @@ const TransactionModel = {
     return this.findById(result.insertId);
   },
 
+  async findByReference(referenceType: string, referenceId: number): Promise<TransactionRow[]> {
+    const [rows] = await pool.execute<TransactionRow[]>(
+      'SELECT * FROM transactions WHERE reference_type = ? AND reference_id = ?',
+      [referenceType, referenceId],
+    );
+    return rows;
+  },
+
+  async update(
+    id: number,
+    data: Partial<{
+      account_id: number;
+      amount: number;
+      description: string | null;
+      date: string;
+    }>,
+  ): Promise<boolean> {
+    const fields: string[] = [];
+    const params: (string | number | null)[] = [];
+
+    if (data.account_id !== undefined) { fields.push('account_id = ?'); params.push(data.account_id); }
+    if (data.amount !== undefined) { fields.push('amount = ?'); params.push(data.amount); }
+    if (data.description !== undefined) { fields.push('description = ?'); params.push(data.description); }
+    if (data.date !== undefined) { fields.push('date = ?'); params.push(data.date); }
+
+    if (fields.length === 0) return false;
+
+    params.push(id);
+    const [result] = await pool.execute<ResultSetHeader>(
+      `UPDATE transactions SET ${fields.join(', ')} WHERE id = ?`,
+      params,
+    );
+    return result.affectedRows > 0;
+  },
+
   async getRecent(entityId: number, limit: number = 10): Promise<TransactionRow[]> {
     const [rows] = await pool.execute<TransactionRow[]>(
       `SELECT t.*, a.name AS account_name, u.nom AS user_nom

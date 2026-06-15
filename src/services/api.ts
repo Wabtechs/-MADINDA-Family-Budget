@@ -34,6 +34,8 @@ export const authApi = {
   getProfile: () => api.get('/auth/me'),
   updateProfile: (data: Partial<{ nom: string; email: string; avatar: string; phone: string }>) =>
     api.put('/auth/profile', data),
+  changePassword: (data: { current_password: string; new_password: string }) =>
+    api.put('/auth/password', data),
   forgotPassword: (email: string) => api.post('/auth/forgot-password', { email }),
   resetPassword: (data: { token: string; password: string }) => api.post('/auth/reset-password', data),
 };
@@ -57,7 +59,7 @@ export const entityApi = {
 
 export const accountApi = {
   list: (entityId: number) => api.get('/accounts', { params: { entity_id: entityId } }),
-  create: (data: { entity_id: number; name: string; type: string; balance?: number; currency?: string; bank_name?: string; description?: string }) =>
+  create: (data: { entity_id: number; name: string; type: string; balance?: number; currency?: string; account_number?: string; bank_name?: string; description?: string }) =>
     api.post('/accounts', data),
   getById: (id: number) => api.get(`/accounts/${id}`),
   update: (id: number, data: Partial<{ name: string; type: string; balance: number; bank_name: string; description: string; is_active: boolean }>) =>

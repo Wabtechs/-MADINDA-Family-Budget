@@ -206,7 +206,7 @@ export default function BudgetsPage() {
                     <div className="mb-2">
                       <div className="d-flex justify-content-between small mb-1">
                         <span>&euro;{budget.spent.toFixed(2)} d&eacute;pens&eacute;s</span>
-                        <span className="fw-semibold">{Math.round((budget.spent / budget.amount) * 100)}%</span>
+                        <span className="fw-semibold">{budget.amount > 0 ? Math.round((budget.spent / budget.amount) * 100) : 0}%</span>
                       </div>
                       <div className="progress" style={{ height: 8 }}>
                         <div className={`progress-bar ${color}`} style={{ width: `${pct}%` }} />

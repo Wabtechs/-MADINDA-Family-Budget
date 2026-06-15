@@ -152,6 +152,7 @@ class IncomeService {
         await AccountModel.updateBalance(newAccountId, newBalance);
       }
 
+      const existingTxs = await TransactionModel.findByReference('income', incomeId);
       const transactionData = {
         entity_id: income.entity_id,
         account_id: newAccountId,
@@ -164,7 +165,11 @@ class IncomeService {
         date: data.date ?? income.date,
       };
 
-      await TransactionModel.create(transactionData);
+      if (existingTxs.length > 0) {
+        await TransactionModel.update(existingTxs[0].id, transactionData);
+      } else {
+        await TransactionModel.create(transactionData);
+      }
     }
 
     await AuditService.log(userId, income.entity_id, 'update', 'income', incomeId, {

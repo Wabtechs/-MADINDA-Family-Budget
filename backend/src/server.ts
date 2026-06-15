@@ -6,7 +6,10 @@ import routes from './routes/index.js';
 
 const app = express();
 
-app.use(cors({ origin: '*', credentials: true }));
+app.use(cors({
+  origin: process.env.CORS_ORIGIN?.split(',') || ['http://localhost:5173', 'http://localhost:4173'],
+  credentials: true,
+}));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
@@ -18,10 +21,8 @@ app.use('/api', routes);
 
 app.use(errorHandler);
 
-if (process.env.NODE_ENV !== 'production') {
-  app.listen(env.port, () => {
-    console.log(`🚀 MADINDA v2 API running on http://localhost:${env.port}`);
-  });
-}
+app.listen(env.port, () => {
+  console.log(`🚀 MADINDA v2 API running on http://localhost:${env.port}`);
+});
 
 export default app;

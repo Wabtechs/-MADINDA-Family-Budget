@@ -21,7 +21,8 @@ const useEntityStore = create<EntityStore>((set) => ({
     try {
       const res = await entityApi.list();
       const entities = res.data?.data || [];
-      set({ entities, loading: false, currentEntity: entities[0] || null });
+      const current = entities.find((e) => e.id === get().currentEntity?.id) || entities[0] || null;
+      set({ entities, loading: false, currentEntity: current });
     } catch {
       set({ loading: false });
     }

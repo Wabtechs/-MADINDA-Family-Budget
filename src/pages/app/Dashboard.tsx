@@ -71,7 +71,7 @@ export default function DashboardPage() {
         <div className="col-6 col-md-3">
           <div className="card border-0 shadow-sm h-100">
             <div className="card-body text-center py-3">
-              <div className="small text-secondary text-uppercase small fw-semibold">Solde actuel</div>
+              <div className="small text-secondary text-uppercase fw-semibold">Solde actuel</div>
               <div className="fs-3 fw-bold text-dark">&euro;{(data?.currentBalance ?? 0).toFixed(2)}</div>
             </div>
           </div>
