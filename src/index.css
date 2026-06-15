@@ -74,10 +74,14 @@
   box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
 
-/* Flex-grow-1 alias (Bootstrap already has this but just in case) */
-
-/* Opacity aliases for Bootstrap (5.3+ already supports these) */
-/* bg-opacity-*, text-opacity-*, border-opacity-* are already in Bootstrap */
+/* Extended opacity utilities (Bootstrap only ships 10/25/50/75/100) */
+.text-opacity-60 { --bs-text-opacity: 0.6 !important; }
+.text-opacity-70 { --bs-text-opacity: 0.7 !important; }
+.bg-opacity-30 { --bs-bg-opacity: 0.3 !important; }
+.border-opacity-20 { --bs-border-opacity: 0.2 !important; }
+.opacity-5 { opacity: 0.05 !important; }
+.text-sm { font-size: 0.875rem !important; }
+.bg-facebook { background-color: #1877f2 !important; }
 
 /* Smooth rotate for FAQ */
 .rotate-transition {

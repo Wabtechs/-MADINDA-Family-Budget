@@ -5,7 +5,7 @@ const contactInfo = [
 ];
 
 const socialLinks = [
-  { name: 'Facebook', icon: 'f', bg: 'bg-blue-600' },
+  { name: 'Facebook', icon: 'f', bg: 'bg-facebook' },
   { name: 'Twitter', icon: '𝕏', bg: 'bg-dark' },
   { name: 'LinkedIn', icon: 'in', bg: 'bg-primary' },
   { name: 'Instagram', icon: '📷', bg: 'gradient-purple-pink' },
