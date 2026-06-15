@@ -51,7 +51,7 @@ export default function RegisterPage() {
             <input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Minimum 6 caractères" required minLength={6} />
           </div>
 
-          <button type="submit" className="btn btn-primary btn-lg" disabled={loading} style={{ width: '100%', justifyContent: 'center' }}>
+          <button type="submit" className="inline-flex items-center justify-center font-medium rounded-lg transition-colors bg-indigo-500 text-white hover:bg-indigo-600 px-6 py-3 text-lg" disabled={loading} style={{ width: '100%', justifyContent: 'center' }}>
             {loading ? 'Inscription...' : 'Créer mon compte'}
           </button>
         </form>

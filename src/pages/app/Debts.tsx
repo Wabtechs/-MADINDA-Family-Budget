@@ -41,9 +41,9 @@ const statusLabels: Record<string, string> = {
 };
 
 const statusColors: Record<string, string> = {
-  active: 'bg-primary',
-  paid: 'bg-success',
-  overdue: 'bg-danger',
+  active: 'bg-indigo-500',
+  paid: 'bg-emerald-500',
+  overdue: 'bg-red-500',
 };
 
 export default function DebtsPage() {
@@ -166,65 +166,65 @@ export default function DebtsPage() {
 
   return (
     <div>
-      <div className="d-flex align-items-center justify-content-between mb-4">
+      <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="h3 fw-bold mb-0">Dettes</h1>
-          <p className="text-secondary small mb-0">{debts.length} dette(s)</p>
+          <h1 className="text-2xl font-bold mb-0">Dettes</h1>
+          <p className="text-gray-500 text-sm mb-0">{debts.length} dette(s)</p>
         </div>
         <Button onClick={openCreate}>Nouvelle dette</Button>
       </div>
 
-      {error && <div className="alert alert-danger py-2">{error}</div>}
+      {error && <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-2 rounded-lg text-sm">{error}</div>}
 
       {/* Tabs */}
-      <ul className="nav nav-tabs mb-4">
-        <li className="nav-item">
-          <button className={`nav-link ${tab === 'lent' ? 'active fw-semibold' : ''}`} onClick={() => setTab('lent')}>On nous doit ({debts.filter((d) => d.type === 'lent').length})</button>
+      <ul className="flex border-b border-gray-200 mb-6">
+        <li className="mr-1">
+          <button className={`inline-block px-4 py-2 text-sm font-medium border-b-2 ${tab === 'lent' ? 'border-indigo-500 text-indigo-600 font-semibold' : 'border-transparent text-gray-500 hover:text-gray-700'}`} onClick={() => setTab('lent')}>On nous doit ({debts.filter((d) => d.type === 'lent').length})</button>
         </li>
-        <li className="nav-item">
-          <button className={`nav-link ${tab === 'borrowed' ? 'active fw-semibold' : ''}`} onClick={() => setTab('borrowed')}>Nous devons ({debts.filter((d) => d.type === 'borrowed').length})</button>
+        <li className="mr-1">
+          <button className={`inline-block px-4 py-2 text-sm font-medium border-b-2 ${tab === 'borrowed' ? 'border-indigo-500 text-indigo-600 font-semibold' : 'border-transparent text-gray-500 hover:text-gray-700'}`} onClick={() => setTab('borrowed')}>Nous devons ({debts.filter((d) => d.type === 'borrowed').length})</button>
         </li>
       </ul>
 
-      <div className="row g-4">
+      <div className="flex flex-wrap gap-6">
         {/* Debt List */}
-        <div className={`${selectedDebt ? 'col-lg-6' : 'col-12'}`}>
+        <div className={`${selectedDebt ? 'lg:w-1/2' : 'w-full'}`}>
           {filteredDebts.length === 0 && !error ? (
-            <div className="card border-0 shadow-sm">
-              <div className="card-body text-center py-5">
-                <p className="text-secondary mb-3">Aucune dette dans cette cat&eacute;gorie.</p>
+            <div className="bg-white rounded-xl border-0 shadow-sm">
+              <div className="p-6 text-center py-12">
+                <p className="text-gray-500 mb-4">Aucune dette dans cette catégorie.</p>
                 <Button onClick={openCreate}>Ajouter une dette</Button>
               </div>
             </div>
           ) : (
-            <div className="row g-3">
+            <div className="flex flex-wrap gap-4">
               {filteredDebts.map((debt) => {
                 const remaining = debt.remaining_amount ?? debt.amount;
                 const pct = debt.amount > 0 ? ((debt.amount - remaining) / debt.amount) * 100 : 0;
                 return (
-                  <div key={debt.id} className="col-12">
-                    <div className={`card border-0 shadow-sm ${selectedDebt?.id === debt.id ? 'border border-primary' : ''}`} style={{ cursor: 'pointer' }} onClick={() => viewDebt(debt)}>
-                      <div className="card-body">
-                        <div className="d-flex justify-content-between align-items-start">
-                          <div className="flex-grow-1 min-w-0">
-                            <div className="d-flex align-items-center gap-2 mb-1">
-                              <h6 className="fw-bold mb-0">{debt.contact_name}</h6>
-                              <span className={`badge ${statusColors[debt.status]} text-white`}>{statusLabels[debt.status]}</span>
+                  <div key={debt.id} className="w-full">
+                    <div className={`bg-white rounded-xl border-0 shadow-sm ${selectedDebt?.id === debt.id ? 'border border-indigo-500' : ''}`} style={{ cursor: 'pointer' }} onClick={() => viewDebt(debt)}>
+                      <div className="p-6">
+                        <div className="flex justify-between items-start">
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-1">
+                              <h6 className="font-bold mb-0">{debt.contact_name}</h6>
+                              <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${statusColors[debt.status]} text-white`}>{statusLabels[debt.status]}</span>
                             </div>
-                            {debt.description && <p className="small text-secondary mb-1">{debt.description}</p>}
-                            {debt.due_date && <p className="small text-secondary mb-1">&Eacute;ch&eacute;ance: {new Date(debt.due_date).toLocaleDateString('fr-FR')}</p>}
+                            {debt.description && <p className="text-sm text-gray-500 mb-1">{debt.description}</p>}
+                            {debt.due_date && <p className="text-sm text-gray-500 mb-1">Échéance: {new Date(debt.due_date).toLocaleDateString('fr-FR')}</p>}
                           </div>
-                          <div className="text-end flex-shrink-0">
-                            <div className="fw-bold fs-5">&euro;{remaining.toFixed(2)}</div>
-                            <div className="small text-secondary">sur &euro;{debt.amount.toFixed(2)}</div>
+                          <div className="text-end shrink-0">
+                            <div className="font-bold text-lg">&euro;{remaining.toFixed(2)}</div>
+                            <div className="text-sm text-gray-500">sur &euro;{debt.amount.toFixed(2)}</div>
                           </div>
                         </div>
-                        <div className="progress mt-2" style={{ height: 5 }}>
-                          <div className="progress-bar bg-primary" style={{ width: `${Math.min(pct, 100)}%` }} />
+                        <div className="h-2 bg-gray-200 rounded-full overflow-hidden mt-2" style={{ height: 5 }}>
+                          <div className="h-full rounded-full bg-indigo-500" style={{ width: `${Math.min(pct, 100)}%` }} />
                         </div>
-                        <div className="d-flex gap-2 mt-2">
+                        <div className="flex gap-2 mt-2">
                           <Button variant="ghost" size="sm" onClick={(e) => { e.stopPropagation(); openEdit(debt); }}>Modifier</Button>
-                          <Button variant="ghost" size="sm" className="text-danger" onClick={(e) => { e.stopPropagation(); setDeleteId(debt.id); }}>Supprimer</Button>
+                          <Button variant="ghost" size="sm" className="text-red-500" onClick={(e) => { e.stopPropagation(); setDeleteId(debt.id); }}>Supprimer</Button>
                         </div>
                       </div>
                     </div>
@@ -237,48 +237,48 @@ export default function DebtsPage() {
 
         {/* Debt Detail */}
         {selectedDebt && (
-          <div className="col-lg-6">
-            <div className="card border-0 shadow-sm">
-              <div className="card-body">
-                <div className="d-flex justify-content-between align-items-start mb-3">
+          <div className="lg:w-1/2">
+            <div className="bg-white rounded-xl border-0 shadow-sm">
+              <div className="p-6">
+                <div className="flex justify-between items-start mb-4">
                   <div>
-                    <h5 className="fw-bold mb-1">{selectedDebt.contact_name}</h5>
-                    <span className={`badge ${statusColors[selectedDebt.status]} text-white`}>{statusLabels[selectedDebt.status]}</span>
-                    <span className="badge bg-secondary bg-opacity-10 text-secondary ms-2">{typeLabels[selectedDebt.type]}</span>
+                    <h5 className="font-bold mb-1">{selectedDebt.contact_name}</h5>
+                    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${statusColors[selectedDebt.status]} text-white`}>{statusLabels[selectedDebt.status]}</span>
+                    <span className="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-700 ml-2">{typeLabels[selectedDebt.type]}</span>
                   </div>
-                  <button className="btn btn-sm btn-outline-secondary" onClick={() => setSelectedDebt(null)}>
+                  <button className="border border-gray-400 text-gray-600 hover:bg-gray-100 inline-flex items-center justify-center font-medium rounded-lg transition-colors px-3 py-1.5 text-sm" onClick={() => setSelectedDebt(null)}>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
                   </button>
                 </div>
-                <div className="row g-2 mb-3">
-                  <div className="col-6">
-                    <div className="small text-secondary">Montant total</div>
-                    <div className="fw-bold">&euro;{selectedDebt.amount.toFixed(2)}</div>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <div className="w-1/2">
+                    <div className="text-sm text-gray-500">Montant total</div>
+                    <div className="font-bold">&euro;{selectedDebt.amount.toFixed(2)}</div>
                   </div>
-                  <div className="col-6">
-                    <div className="small text-secondary">Restant</div>
-                    <div className="fw-bold text-danger">&euro;{(selectedDebt.remaining_amount ?? selectedDebt.amount).toFixed(2)}</div>
+                  <div className="w-1/2">
+                    <div className="text-sm text-gray-500">Restant</div>
+                    <div className="font-bold text-red-500">&euro;{(selectedDebt.remaining_amount ?? selectedDebt.amount).toFixed(2)}</div>
                   </div>
                 </div>
-                {selectedDebt.description && <p className="small text-secondary mb-2">{selectedDebt.description}</p>}
-                {selectedDebt.due_date && <p className="small text-secondary mb-2">&Eacute;ch&eacute;ance: {new Date(selectedDebt.due_date).toLocaleDateString('fr-FR')}</p>}
+                {selectedDebt.description && <p className="text-sm text-gray-500 mb-2">{selectedDebt.description}</p>}
+                {selectedDebt.due_date && <p className="text-sm text-gray-500 mb-2">Échéance: {new Date(selectedDebt.due_date).toLocaleDateString('fr-FR')}</p>}
 
                 <hr />
-                <div className="d-flex justify-content-between align-items-center mb-2">
-                  <h6 className="fw-bold mb-0">Historique des paiements</h6>
+                <div className="flex justify-between items-center mb-2">
+                  <h6 className="font-bold mb-0">Historique des paiements</h6>
                   <Button size="sm" onClick={() => { payForm.reset({ amount: '', payment_date: new Date().toISOString().split('T')[0], note: '' }); setPaymentModal(true); }}>+ Ajouter un paiement</Button>
                 </div>
                 {payments.length === 0 ? (
-                  <p className="small text-secondary">Aucun paiement enregistr&eacute;.</p>
+                  <p className="text-sm text-gray-500">Aucun paiement enregistré.</p>
                 ) : (
-                  <div className="list-group list-group-flush">
+                  <div className="divide-y divide-gray-100">
                     {payments.map((p) => (
-                      <div key={p.id} className="list-group-item px-0 border-0 border-bottom d-flex justify-content-between align-items-center">
+                      <div key={p.id} className="px-0 py-3 flex justify-between items-center">
                         <div>
-                          <div className="small fw-semibold">&euro;{p.amount.toFixed(2)}</div>
-                          {p.note && <div className="small text-secondary">{p.note}</div>}
+                          <div className="text-sm font-semibold">&euro;{p.amount.toFixed(2)}</div>
+                          {p.note && <div className="text-sm text-gray-500">{p.note}</div>}
                         </div>
-                        <div className="small text-secondary">{new Date(p.payment_date).toLocaleDateString('fr-FR')}</div>
+                        <div className="text-sm text-gray-500">{new Date(p.payment_date).toLocaleDateString('fr-FR')}</div>
                       </div>
                     ))}
                   </div>
@@ -299,7 +299,7 @@ export default function DebtsPage() {
           <Input label="Montant" type="number" step="0.01" register={form.register('amount')} error={form.formState.errors.amount?.message} />
           <Input label="Date d'échéance" type="date" register={form.register('due_date')} error={form.formState.errors.due_date?.message} />
           <Input label="Description" register={form.register('description')} error={form.formState.errors.description?.message} />
-          <div className="d-flex gap-2 mt-3">
+          <div className="flex gap-2 mt-4">
             <Button type="submit" loading={saving}>{editing ? 'Enregistrer' : 'Créer'}</Button>
             <Button variant="secondary" onClick={() => setModalOpen(false)}>Annuler</Button>
           </div>
@@ -312,7 +312,7 @@ export default function DebtsPage() {
           <Input label="Montant" type="number" step="0.01" register={payForm.register('amount')} error={payForm.formState.errors.amount?.message} />
           <Input label="Date de paiement" type="date" register={payForm.register('payment_date')} error={payForm.formState.errors.payment_date?.message} />
           <Input label="Note" register={payForm.register('note')} error={payForm.formState.errors.note?.message} />
-          <div className="d-flex gap-2 mt-3">
+          <div className="flex gap-2 mt-4">
             <Button type="submit" loading={paySaving}>Ajouter</Button>
             <Button variant="secondary" onClick={() => setPaymentModal(false)}>Annuler</Button>
           </div>
@@ -322,7 +322,7 @@ export default function DebtsPage() {
       {/* Delete Modal */}
       <Modal isOpen={deleteId !== null} onClose={() => setDeleteId(null)} title="Confirmer la suppression">
         <p>Êtes-vous sûr de vouloir supprimer cette dette ?</p>
-        <div className="d-flex gap-2">
+        <div className="flex gap-2">
           <Button variant="danger" onClick={confirmDelete} loading={deleting}>Supprimer</Button>
           <Button variant="secondary" onClick={() => setDeleteId(null)}>Annuler</Button>
         </div>

@@ -38,7 +38,7 @@ const accountTypeIcons: Record<string, string> = {
   cash: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
   credit_card: 'M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z',
   investment: 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6',
-  other: 'M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4',
+  other: 'M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582-4 8-4s8 1.79 8 4',
 };
 
 export default function AccountsPage() {
@@ -130,48 +130,48 @@ export default function AccountsPage() {
 
   return (
     <div>
-      <div className="d-flex align-items-center justify-content-between mb-4">
+      <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="h3 fw-bold mb-0">Comptes</h1>
-          <p className="text-secondary small mb-0">{accounts.length} compte(s)</p>
+          <h1 className="text-2xl font-bold mb-0">Comptes</h1>
+          <p className="text-gray-500 text-sm mb-0">{accounts.length} compte(s)</p>
         </div>
         <Button onClick={openCreate}>Nouveau compte</Button>
       </div>
 
-      {error && <div className="alert alert-danger py-2">{error}</div>}
+      {error && <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-2 rounded-lg text-sm">{error}</div>}
 
       {accounts.length === 0 && !error ? (
-        <div className="card border-0 shadow-sm">
-          <div className="card-body text-center py-5">
-            <p className="text-secondary mb-3">Aucun compte pour le moment.</p>
-            <Button onClick={openCreate}>Cr&eacute;er un compte</Button>
+        <div className="bg-white rounded-xl border-0 shadow-sm">
+          <div className="p-6 text-center py-12">
+            <p className="text-gray-500 mb-4">Aucun compte pour le moment.</p>
+            <Button onClick={openCreate}>Créer un compte</Button>
           </div>
         </div>
       ) : (
-        <div className="row g-3">
+        <div className="flex flex-wrap gap-4">
           {accounts.map((account) => (
-            <div key={account.id} className="col-md-6 col-lg-4">
-              <div className="card border-0 shadow-sm h-100">
-                <div className="card-body">
-                  <div className="d-flex align-items-center gap-3 mb-3">
-                    <div className="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center" style={{ width: 44, height: 44 }}>
+            <div key={account.id} className="md:w-1/2 lg:w-1/3">
+              <div className="bg-white rounded-xl border-0 shadow-sm h-full">
+                <div className="p-6">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="rounded-full bg-indigo-100 flex items-center justify-center" style={{ width: 44, height: 44 }}>
                       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d={accountTypeIcons[account.type] || accountTypeIcons.other} />
                       </svg>
                     </div>
-                    <div className="flex-grow-1 min-w-0">
-                      <h6 className="fw-bold mb-0 text-truncate">{account.name}</h6>
-                      <span className="badge bg-secondary bg-opacity-10 text-secondary" style={{ fontSize: '0.7rem' }}>{accountTypeLabels[account.type] || account.type}</span>
+                    <div className="flex-1 min-w-0">
+                      <h6 className="font-bold mb-0 truncate">{account.name}</h6>
+                      <span className="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-700" style={{ fontSize: '0.7rem' }}>{accountTypeLabels[account.type] || account.type}</span>
                     </div>
                   </div>
-                  {account.bank_name && <p className="small text-secondary mb-2"><span className="fw-semibold">Banque:</span> {account.bank_name}</p>}
-                  {account.account_number && <p className="small text-secondary mb-2"><span className="fw-semibold">N°:</span> {account.account_number}</p>}
-                  <p className={`fw-bold fs-5 mb-0 ${account.balance >= 0 ? 'text-success' : 'text-danger'}`}>
+                  {account.bank_name && <p className="text-sm text-gray-500 mb-2"><span className="font-semibold">Banque:</span> {account.bank_name}</p>}
+                  {account.account_number && <p className="text-sm text-gray-500 mb-2"><span className="font-semibold">N°:</span> {account.account_number}</p>}
+                  <p className={`font-bold text-lg mb-0 ${account.balance >= 0 ? 'text-emerald-500' : 'text-red-500'}`}>
                     &euro;{account.balance.toFixed(2)}
                   </p>
-                  <div className="d-flex gap-2 mt-3 pt-3 border-top">
+                  <div className="flex gap-2 mt-4 pt-3 border-t">
                     <Button variant="ghost" size="sm" onClick={() => openEdit(account)}>Modifier</Button>
-                    <Button variant="ghost" size="sm" className="text-danger" onClick={() => setDeleteId(account.id)}>Supprimer</Button>
+                    <Button variant="ghost" size="sm" className="text-red-500" onClick={() => setDeleteId(account.id)}>Supprimer</Button>
                   </div>
                 </div>
               </div>
@@ -190,8 +190,8 @@ export default function AccountsPage() {
           <Input label="Numéro de compte" register={form.register('account_number')} error={form.formState.errors.account_number?.message} />
           <Input label="Nom de la banque" register={form.register('bank_name')} error={form.formState.errors.bank_name?.message} />
           <Input label="Description" register={form.register('description')} error={form.formState.errors.description?.message} />
-          <div className="d-flex gap-2 mt-3">
-            <Button type="submit" loading={saving}>{editingAccount ? 'Enregistrer' : 'Cr&eacute;er'}</Button>
+          <div className="flex gap-2 mt-4">
+            <Button type="submit" loading={saving}>{editingAccount ? 'Enregistrer' : 'Créer'}</Button>
             <Button variant="secondary" onClick={() => setModalOpen(false)}>Annuler</Button>
           </div>
         </form>
@@ -199,8 +199,8 @@ export default function AccountsPage() {
 
       {/* Delete Modal */}
       <Modal isOpen={deleteId !== null} onClose={() => setDeleteId(null)} title="Confirmer la suppression">
-        <p>&Ecirc;tes-vous s&ucirc;r de vouloir supprimer ce compte ? Cette action est irr&eacute;versible.</p>
-        <div className="d-flex gap-2">
+        <p>Êtes-vous sûr de vouloir supprimer ce compte ? Cette action est irréversible.</p>
+        <div className="flex gap-2">
           <Button variant="danger" onClick={confirmDelete} loading={deleting}>Supprimer</Button>
           <Button variant="secondary" onClick={() => setDeleteId(null)}>Annuler</Button>
         </div>

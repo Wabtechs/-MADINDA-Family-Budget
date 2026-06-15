@@ -132,72 +132,72 @@ export default function IncomesPage() {
 
   return (
     <div>
-      <div className="d-flex align-items-center justify-content-between mb-4">
+      <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="h3 fw-bold mb-0">Revenus</h1>
-          <p className="text-secondary small mb-0">{incomes.length} revenu(s)</p>
+          <h1 className="text-2xl font-bold mb-0">Revenus</h1>
+          <p className="text-gray-500 text-sm mb-0">{incomes.length} revenu(s)</p>
         </div>
         <Button onClick={openCreate}>Nouveau revenu</Button>
       </div>
 
-      {error && <div className="alert alert-danger py-2">{error}</div>}
+      {error && <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-2 rounded-lg text-sm">{error}</div>}
 
       {/* Summary */}
-      <div className="row g-3 mb-4">
-        <div className="col-md-4">
-          <div className="card border-0 shadow-sm bg-primary text-white">
-            <div className="card-body text-center py-3">
-              <div className="text-white text-opacity-75 small text-uppercase fw-semibold">Total (filtr&eacute;)</div>
-              <div className="fs-3 fw-bold">&euro;{totalMonth.toFixed(2)}</div>
+      <div className="flex flex-wrap gap-4 mb-6">
+        <div className="md:w-1/3">
+          <div className="bg-indigo-500 text-white rounded-xl border-0 shadow-sm">
+            <div className="p-6 text-center">
+              <div className="text-white/75 text-sm uppercase font-semibold">Total (filtré)</div>
+              <div className="text-2xl font-bold">&euro;{totalMonth.toFixed(2)}</div>
             </div>
           </div>
         </div>
-        <div className="col-md-4">
-          <div className="card border-0 shadow-sm">
-            <div className="card-body text-center py-3">
-              <div className="text-secondary small text-uppercase fw-semibold">Nombre</div>
-              <div className="fs-3 fw-bold">{filteredIncomes.length}</div>
+        <div className="md:w-1/3">
+          <div className="bg-white rounded-xl border-0 shadow-sm">
+            <div className="p-6 text-center">
+              <div className="text-gray-500 text-sm uppercase font-semibold">Nombre</div>
+              <div className="text-2xl font-bold">{filteredIncomes.length}</div>
             </div>
           </div>
         </div>
-        <div className="col-md-4">
-          <div className="card border-0 shadow-sm">
-            <div className="card-body text-center py-3">
-              <div className="text-secondary small text-uppercase fw-semibold">Moyenne</div>
-              <div className="fs-3 fw-bold">&euro;{(filteredIncomes.length > 0 ? totalMonth / filteredIncomes.length : 0).toFixed(2)}</div>
+        <div className="md:w-1/3">
+          <div className="bg-white rounded-xl border-0 shadow-sm">
+            <div className="p-6 text-center">
+              <div className="text-gray-500 text-sm uppercase font-semibold">Moyenne</div>
+              <div className="text-2xl font-bold">&euro;{(filteredIncomes.length > 0 ? totalMonth / filteredIncomes.length : 0).toFixed(2)}</div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Filters */}
-      <div className="card border-0 shadow-sm mb-4">
-        <div className="card-body">
-          <div className="row g-2 align-items-end">
-            <div className="col-md-3">
-              <label className="form-label small fw-semibold">Cat&eacute;gorie</label>
-              <select className="form-select form-select-sm" value={filterCat} onChange={(e) => setFilterCat(e.target.value)}>
+      <div className="bg-white rounded-xl border-0 shadow-sm mb-6">
+        <div className="p-6">
+          <div className="flex flex-wrap gap-2 items-end">
+            <div className="md:w-1/4">
+              <label className="block text-sm font-medium text-gray-700 mb-1">Catégorie</label>
+              <select className="block w-full rounded-lg border border-gray-300 px-2 py-1 text-xs focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none" value={filterCat} onChange={(e) => setFilterCat(e.target.value)}>
                 <option value="">Toutes</option>
                 {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
               </select>
             </div>
-            <div className="col-md-2">
-              <label className="form-label small fw-semibold">Compte</label>
-              <select className="form-select form-select-sm" value={filterAcc} onChange={(e) => setFilterAcc(e.target.value)}>
+            <div className="md:w-1/6">
+              <label className="block text-sm font-medium text-gray-700 mb-1">Compte</label>
+              <select className="block w-full rounded-lg border border-gray-300 px-2 py-1 text-xs focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none" value={filterAcc} onChange={(e) => setFilterAcc(e.target.value)}>
                 <option value="">Tous</option>
                 {accounts.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}
               </select>
             </div>
-            <div className="col-md-2">
-              <label className="form-label small fw-semibold">Du</label>
-              <input type="date" className="form-control form-control-sm" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} />
+            <div className="md:w-1/6">
+              <label className="block text-sm font-medium text-gray-700 mb-1">Du</label>
+              <input type="date" className="block w-full rounded-lg border border-gray-300 px-2 py-1 text-xs focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} />
             </div>
-            <div className="col-md-2">
-              <label className="form-label small fw-semibold">Au</label>
-              <input type="date" className="form-control form-control-sm" value={dateTo} onChange={(e) => setDateTo(e.target.value)} />
+            <div className="md:w-1/6">
+              <label className="block text-sm font-medium text-gray-700 mb-1">Au</label>
+              <input type="date" className="block w-full rounded-lg border border-gray-300 px-2 py-1 text-xs focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none" value={dateTo} onChange={(e) => setDateTo(e.target.value)} />
             </div>
-            <div className="col-md-3">
-              <button className="btn btn-sm btn-outline-secondary w-100" onClick={() => { setFilterCat(''); setFilterAcc(''); setDateFrom(''); setDateTo(''); }}>R&eacute;initialiser</button>
+            <div className="md:w-1/4">
+              <button className="border border-gray-400 text-gray-600 hover:bg-gray-100 inline-flex items-center justify-center font-medium rounded-lg transition-colors px-3 py-1.5 text-sm w-full" onClick={() => { setFilterCat(''); setFilterAcc(''); setDateFrom(''); setDateTo(''); }}>Réinitialiser</button>
             </div>
           </div>
         </div>
@@ -205,18 +205,18 @@ export default function IncomesPage() {
 
       {/* Category Stats */}
       {Object.keys(catTotals).length > 0 && (
-        <div className="card border-0 shadow-sm mb-4">
-          <div className="card-body">
-            <h6 className="fw-bold mb-3">R&eacute;partition par cat&eacute;gorie</h6>
-            <div className="table-responsive">
-              <table className="table table-sm mb-0">
-                <thead><tr><th>Cat&eacute;gorie</th><th>Nombre</th><th className="text-end">Total</th></tr></thead>
+        <div className="bg-white rounded-xl border-0 shadow-sm mb-6">
+          <div className="p-6">
+            <h6 className="font-bold mb-4">Répartition par catégorie</h6>
+            <div className="overflow-auto">
+              <table className="w-full text-sm mb-0">
+                <thead><tr><th>Catégorie</th><th>Nombre</th><th className="text-end">Total</th></tr></thead>
                 <tbody>
                   {Object.entries(catTotals).sort((a, b) => b[1].total - a[1].total).map(([cat, stats]) => (
                     <tr key={cat}>
                       <td>{cat}</td>
                       <td>{stats.count}</td>
-                      <td className="text-end fw-semibold">&euro;{stats.total.toFixed(2)}</td>
+                      <td className="text-end font-semibold">&euro;{stats.total.toFixed(2)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -228,21 +228,21 @@ export default function IncomesPage() {
 
       {/* List */}
       {filteredIncomes.length === 0 && !error ? (
-        <div className="card border-0 shadow-sm">
-          <div className="card-body text-center py-5">
-            <p className="text-secondary mb-3">Aucun revenu trouv&eacute;.</p>
+        <div className="bg-white rounded-xl border-0 shadow-sm">
+          <div className="p-6 text-center py-12">
+            <p className="text-gray-500 mb-4">Aucun revenu trouvé.</p>
             <Button onClick={openCreate}>Ajouter un revenu</Button>
           </div>
         </div>
       ) : (
-        <div className="card border-0 shadow-sm">
-          <div className="table-responsive">
-            <table className="table table-hover mb-0 align-middle">
-              <thead className="table-light">
+        <div className="bg-white rounded-xl border-0 shadow-sm">
+          <div className="overflow-auto">
+            <table className="w-full text-sm mb-0 align-middle">
+              <thead className="bg-gray-50">
                 <tr>
                   <th>Date</th>
                   <th>Description</th>
-                  <th>Cat&eacute;gorie</th>
+                  <th>Catégorie</th>
                   <th>Compte</th>
                   <th className="text-end">Montant</th>
                   <th className="text-end">Actions</th>
@@ -250,17 +250,17 @@ export default function IncomesPage() {
               </thead>
               <tbody>
                 {filteredIncomes.map((inc) => (
-                  <tr key={inc.id}>
-                    <td className="text-nowrap small">{new Date(inc.date).toLocaleDateString('fr-FR')}</td>
-                    <td className="small">{inc.description || '-'}</td>
-                    <td><span className="badge bg-primary bg-opacity-10 text-primary">{inc.category_name || '-'}</span></td>
-                    <td className="small">{inc.account_name || '-'}</td>
-                    <td className="text-end fw-bold text-success">&euro;{inc.amount.toFixed(2)}</td>
+                  <tr key={inc.id} className="hover:bg-gray-50">
+                    <td className="text-nowrap text-sm">{new Date(inc.date).toLocaleDateString('fr-FR')}</td>
+                    <td className="text-sm">{inc.description || '-'}</td>
+                    <td><span className="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-indigo-100 text-indigo-700">{inc.category_name || '-'}</span></td>
+                    <td className="text-sm">{inc.account_name || '-'}</td>
+                    <td className="text-end font-bold text-emerald-500">&euro;{inc.amount.toFixed(2)}</td>
                     <td className="text-end">
-                      <button className="btn btn-sm btn-outline-secondary me-1" onClick={() => openEdit(inc)} title="Modifier">
+                      <button className="border border-gray-400 text-gray-600 hover:bg-gray-100 inline-flex items-center justify-center font-medium rounded-lg transition-colors px-3 py-1.5 text-sm mr-1" onClick={() => openEdit(inc)} title="Modifier">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" /><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" /></svg>
                       </button>
-                      <button className="btn btn-sm btn-outline-danger" onClick={() => setDeleteId(inc.id)} title="Supprimer">
+                      <button className="border border-red-500 text-red-500 hover:bg-red-50 inline-flex items-center justify-center font-medium rounded-lg transition-colors px-3 py-1.5 text-sm" onClick={() => setDeleteId(inc.id)} title="Supprimer">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6" /><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" /></svg>
                       </button>
                     </td>
@@ -280,7 +280,7 @@ export default function IncomesPage() {
           <Select label="Compte" options={accounts.map((a) => ({ value: a.id, label: a.name }))} register={form.register('account_id')} error={form.formState.errors.account_id?.message} placeholder="Sélectionner" />
           <Input label="Date" type="date" register={form.register('date')} error={form.formState.errors.date?.message} />
           <Input label="Description" register={form.register('description')} error={form.formState.errors.description?.message} />
-          <div className="d-flex gap-2 mt-3">
+          <div className="flex gap-2 mt-4">
             <Button type="submit" loading={saving}>{editing ? 'Enregistrer' : 'Créer'}</Button>
             <Button variant="secondary" onClick={() => setModalOpen(false)}>Annuler</Button>
           </div>
@@ -290,7 +290,7 @@ export default function IncomesPage() {
       {/* Delete Modal */}
       <Modal isOpen={deleteId !== null} onClose={() => setDeleteId(null)} title="Confirmer la suppression">
         <p>Êtes-vous sûr de vouloir supprimer ce revenu ?</p>
-        <div className="d-flex gap-2">
+        <div className="flex gap-2">
           <Button variant="danger" onClick={confirmDelete} loading={deleting}>Supprimer</Button>
           <Button variant="secondary" onClick={() => setDeleteId(null)}>Annuler</Button>
         </div>

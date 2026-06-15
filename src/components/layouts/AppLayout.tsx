@@ -28,11 +28,11 @@ export default function AppLayout() {
   };
 
   return (
-    <div className="d-flex min-vh-100">
+    <div className="flex min-h-screen">
       {/* Sidebar overlay */}
       {sidebarOpen && (
         <div
-          className="position-fixed top-0 start-0 w-100 h-100 bg-black bg-opacity-50"
+          className="fixed top-0 left-0 w-full h-full bg-black/50"
           style={{ zIndex: 1040 }}
           onClick={() => setSidebarOpen(false)}
         />
@@ -40,7 +40,7 @@ export default function AppLayout() {
 
       {/* Sidebar */}
       <aside
-        className={`bg-dark text-light d-flex flex-column flex-shrink-0 ${sidebarOpen ? 'd-block' : ''}`}
+        className={`bg-gray-900 text-gray-100 flex flex-col shrink-0`}
         style={{
           width: '260px',
           minHeight: '100vh',
@@ -52,18 +52,18 @@ export default function AppLayout() {
           transition: 'transform 0.3s ease',
         }}
       >
-        <div className="p-3 border-bottom border-secondary">
-          <Link to="/app" className="d-flex align-items-center gap-2 text-white text-decoration-none">
-            <span className="bg-primary text-white rounded-2 px-2 py-1 fs-5 fw-bold">M</span>
-            <span className="fw-bold fs-5">MADINDA</span>
+        <div className="p-4 border-b border-gray-600">
+          <Link to="/app" className="flex items-center gap-2 text-white no-underline">
+            <span className="bg-indigo-500 text-white rounded-md px-2 py-1 text-lg font-bold">M</span>
+            <span className="font-bold text-lg">MADINDA</span>
           </Link>
         </div>
 
         {/* Entity selector */}
         {entities.length > 0 && (
-          <div className="px-3 pt-3 pb-2 border-bottom border-secondary">
+          <div className="px-4 pt-4 pb-2 border-b border-gray-600">
             <select
-              className="form-select form-select-sm bg-dark text-light border-secondary"
+              className="block w-full rounded-lg border border-gray-600 px-2 py-1 text-xs focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none bg-gray-900 text-gray-100"
               value={currentEntity?.id || ''}
               onChange={(e) => {
                 const entity = entities.find((en) => en.id === Number(e.target.value));
@@ -77,16 +77,16 @@ export default function AppLayout() {
           </div>
         )}
 
-        <nav className="flex-grow-1 overflow-auto py-2">
-          <ul className="nav flex-column">
+        <nav className="flex-1 overflow-auto py-2">
+          <ul className="flex flex-col list-none p-0 m-0">
             {navItems.map((item) => (
-              <li className="nav-item" key={item.to}>
+              <li key={item.to}>
                 <NavLink
                   to={item.to}
                   end={item.end}
                   className={({ isActive }) =>
-                    `nav-link d-flex align-items-center gap-3 px-3 py-2 mx-2 rounded-2 ${
-                      isActive ? 'bg-primary text-white' : 'text-light'
+                    `flex items-center gap-3 px-4 py-2 mx-2 rounded-md text-sm font-medium transition-colors ${
+                      isActive ? 'bg-indigo-500 text-white' : 'text-gray-100'
                     }`
                   }
                   onClick={() => setSidebarOpen(false)}
@@ -94,20 +94,20 @@ export default function AppLayout() {
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d={item.icon} />
                   </svg>
-                  <span className="small">{item.label}</span>
+                  <span className="text-sm">{item.label}</span>
                 </NavLink>
               </li>
             ))}
           </ul>
         </nav>
 
-        <div className="p-3 border-top border-secondary">
-          <div className="d-flex align-items-center gap-2 small" style={{ color: 'rgba(248, 249, 250, 0.75)' }}>
-            <div className="bg-secondary rounded-circle d-flex align-items-center justify-content-center" style={{ width: 32, height: 32 }}>
-              <span className="fw-bold text-white small">{(user?.nom || 'U')[0]}</span>
+        <div className="p-4 border-t border-gray-600">
+          <div className="flex items-center gap-2 text-sm" style={{ color: 'rgba(248, 249, 250, 0.75)' }}>
+            <div className="bg-gray-500 rounded-full flex items-center justify-center" style={{ width: 32, height: 32 }}>
+              <span className="font-bold text-white text-sm">{(user?.nom || 'U')[0]}</span>
             </div>
-            <div className="flex-grow-1 text-truncate">
-              <div className="fw-semibold text-white">{user?.nom}</div>
+            <div className="flex-1 truncate">
+              <div className="font-semibold text-white">{user?.nom}</div>
               <div style={{ fontSize: '0.75rem', color: 'rgba(248, 249, 250, 0.5)' }}>{user?.email}</div>
             </div>
           </div>
@@ -115,12 +115,12 @@ export default function AppLayout() {
       </aside>
 
       {/* Main content */}
-      <div className="flex-grow-1 d-flex flex-column" style={{ marginLeft: '260px' }}>
+      <div className="flex-1 flex flex-col" style={{ marginLeft: '260px' }}>
         {/* Top bar */}
-        <header className="bg-white border-bottom px-4 py-2 d-flex align-items-center justify-content-between sticky-top shadow-sm" style={{ zIndex: 1030 }}>
-          <div className="d-flex align-items-center gap-3">
+        <header className="bg-white border-b px-6 py-2 flex items-center justify-between sticky top-0 shadow-sm" style={{ zIndex: 1030 }}>
+          <div className="flex items-center gap-4">
             <button
-              className="btn btn-sm btn-outline-secondary d-lg-none"
+              className="inline-flex items-center justify-center font-medium rounded-lg transition-colors px-3 py-1.5 text-sm border border-gray-400 text-gray-600 hover:bg-gray-100 lg:hidden"
               onClick={() => setSidebarOpen(true)}
               aria-label="Toggle sidebar"
             >
@@ -130,19 +130,19 @@ export default function AppLayout() {
             </button>
           </div>
 
-          <div className="d-flex align-items-center gap-3">
-            <Link to="/app/notifications" className="btn btn-sm btn-outline-secondary position-relative rounded-circle d-flex align-items-center justify-content-center" style={{ width: 36, height: 36 }} aria-label="Notifications">
+          <div className="flex items-center gap-4">
+            <Link to="/app/notifications" className="inline-flex items-center justify-center font-medium rounded-lg transition-colors px-3 py-1.5 text-sm border border-gray-400 text-gray-600 hover:bg-gray-100 relative rounded-full" style={{ width: 36, height: 36 }} aria-label="Notifications">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.73 21a2 2 0 01-3.46 0" />
               </svg>
             </Link>
-            <Link to="/app/profile" className="btn btn-sm btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center" style={{ width: 36, height: 36 }} aria-label="Profile">
+            <Link to="/app/profile" className="inline-flex items-center justify-center font-medium rounded-lg transition-colors px-3 py-1.5 text-sm border border-gray-400 text-gray-600 hover:bg-gray-100 rounded-full" style={{ width: 36, height: 36 }} aria-label="Profile">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" /><circle cx="12" cy="7" r="4" />
               </svg>
             </Link>
             <button
-              className="btn btn-sm btn-outline-danger rounded-circle d-flex align-items-center justify-content-center"
+              className="inline-flex items-center justify-center font-medium rounded-lg transition-colors px-3 py-1.5 text-sm border border-red-500 text-red-500 hover:bg-red-50 rounded-full"
               style={{ width: 36, height: 36 }}
               onClick={handleLogout}
               aria-label="Logout"
@@ -156,7 +156,7 @@ export default function AppLayout() {
         </header>
 
         {/* Page content */}
-        <main className="flex-grow-1 p-4 bg-light">
+        <main className="flex-1 p-6 bg-gray-50">
           <Outlet />
         </main>
       </div>

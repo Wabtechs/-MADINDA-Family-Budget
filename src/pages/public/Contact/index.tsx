@@ -6,47 +6,47 @@ const contactInfo = [
 
 const socialLinks = [
   { name: 'Facebook', icon: 'f', bg: 'bg-facebook' },
-  { name: 'Twitter', icon: '𝕏', bg: 'bg-dark' },
-  { name: 'LinkedIn', icon: 'in', bg: 'bg-primary' },
+  { name: 'Twitter', icon: '𝕏', bg: 'bg-gray-900' },
+  { name: 'LinkedIn', icon: 'in', bg: 'bg-indigo-500' },
   { name: 'Instagram', icon: '📷', bg: 'gradient-purple-pink' },
 ];
 
 export default function ContactPage() {
   return (
     <>
-      <section className="hero-gradient text-white py-5 position-relative overflow-hidden">
-        <div className="position-absolute top-0 start-0 w-100 h-100 opacity-10" style={{
+      <section className="hero-gradient text-white py-12 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full opacity-10" style={{
           backgroundImage: 'radial-gradient(circle at 25% 75%, rgba(255,255,255,0.15) 0%, transparent 50%)',
         }} />
-        <div className="container position-relative py-5 text-center">
-          <span className="d-inline-block bg-white bg-opacity-10 text-white rounded-pill px-3 py-1 mb-3 fs-6 fw-semibold">Contact</span>
-          <h1 className="display-4 fw-bold mb-3">Contactez-nous</h1>
-          <p className="lead text-white text-opacity-75 mx-auto" style={{ maxWidth: 600 }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative py-12 text-center">
+          <span className="inline-block bg-white/10 text-white rounded-full px-4 py-1 mb-4 text-base font-semibold">Contact</span>
+          <h1 className="text-6xl font-bold mb-4">Contactez-nous</h1>
+          <p className="text-lg text-white/75 mx-auto" style={{ maxWidth: 600 }}>
             Une question ? Une suggestion ? Notre équipe est là pour vous aider.
           </p>
         </div>
       </section>
 
-      <section className="py-5">
-        <div className="container py-4">
-          <div className="row g-5">
-            <div className="col-lg-7">
-              <div className="card border-0 p-4" style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
-                <h3 className="fw-bold mb-1">Envoyez-nous un message</h3>
-                <p className="text-secondary small mb-4">Remplissez le formulaire ci-dessous et nous vous répondrons dans les plus brefs délais.</p>
+      <section className="py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex flex-wrap gap-12">
+            <div className="lg:w-7/12">
+              <div className="bg-white rounded-xl border border-gray-200 shadow-sm border-0 p-6" style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
+                <h3 className="font-bold mb-1">Envoyez-nous un message</h3>
+                <p className="text-gray-500 text-sm mb-6">Remplissez le formulaire ci-dessous et nous vous répondrons dans les plus brefs délais.</p>
                 <form onSubmit={(e) => e.preventDefault()}>
-                  <div className="row g-3">
-                    <div className="col-md-6">
-                      <label className="form-label fw-semibold small">Nom complet</label>
-                      <input type="text" className="form-control form-control-lg" placeholder="Votre nom" />
+                  <div className="flex flex-wrap gap-4">
+                    <div className="md:w-1/2">
+                      <label className="block text-sm font-semibold mb-1">Nom complet</label>
+                      <input type="text" className="block w-full rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none px-4 py-3 text-base" placeholder="Votre nom" />
                     </div>
-                    <div className="col-md-6">
-                      <label className="form-label fw-semibold small">Email</label>
-                      <input type="email" className="form-control form-control-lg" placeholder="votre@email.com" />
+                    <div className="md:w-1/2">
+                      <label className="block text-sm font-semibold mb-1">Email</label>
+                      <input type="email" className="block w-full rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none px-4 py-3 text-base" placeholder="votre@email.com" />
                     </div>
-                    <div className="col-12">
-                      <label className="form-label fw-semibold small">Sujet</label>
-                      <select className="form-select form-select-lg">
+                    <div className="w-full">
+                      <label className="block text-sm font-semibold mb-1">Sujet</label>
+                      <select className="block w-full rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none px-4 py-3 text-base">
                         <option value="">Sélectionnez un sujet</option>
                         <option value="support">Support technique</option>
                         <option value="commercial">Question commerciale</option>
@@ -55,12 +55,12 @@ export default function ContactPage() {
                         <option value="autre">Autre</option>
                       </select>
                     </div>
-                    <div className="col-12">
-                      <label className="form-label fw-semibold small">Message</label>
-                      <textarea className="form-control form-control-lg" rows={6} placeholder="Décrivez votre question ou votre suggestion..." />
+                    <div className="w-full">
+                      <label className="block text-sm font-semibold mb-1">Message</label>
+                      <textarea className="block w-full rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none px-4 py-3 text-base" rows={6} placeholder="Décrivez votre question ou votre suggestion..." />
                     </div>
-                    <div className="col-12">
-                      <button type="submit" className="btn btn-primary btn-lg px-5 fw-semibold">
+                    <div className="w-full">
+                      <button type="submit" className="inline-flex items-center justify-center font-medium rounded-lg transition-colors bg-indigo-500 text-white hover:bg-indigo-600 px-12 py-4 text-lg font-semibold">
                         Envoyer le message
                       </button>
                     </div>
@@ -69,20 +69,20 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="col-lg-5">
-              <div className="d-flex flex-column gap-4 mb-4">
+            <div className="lg:w-5/12">
+              <div className="flex flex-col gap-6 mb-6">
                 {contactInfo.map((info, i) => (
-                  <div key={i} className="card border-0 p-3" style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
-                    <div className="d-flex align-items-center gap-3">
-                      <div className="bg-primary bg-opacity-10 text-primary rounded-2 d-flex align-items-center justify-content-center flex-shrink-0" style={{ width: 48, height: 48, fontSize: '1.3rem' }}>
+                  <div key={i} className="bg-white rounded-xl border border-gray-200 shadow-sm border-0 p-4" style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+                    <div className="flex items-center gap-4">
+                      <div className="bg-indigo-500/10 text-indigo-500 rounded-md flex items-center justify-center shrink-0" style={{ width: 48, height: 48, fontSize: '1.3rem' }}>
                         {info.icon}
                       </div>
                       <div>
-                        <div className="fw-semibold small">{info.title}</div>
+                        <div className="font-semibold text-sm">{info.title}</div>
                         {info.href ? (
-                          <a href={info.href} className="text-decoration-none text-dark small">{info.value}</a>
+                          <a href={info.href} className="no-underline text-gray-900 text-sm">{info.value}</a>
                         ) : (
-                          <span className="text-secondary small">{info.value}</span>
+                          <span className="text-gray-500 text-sm">{info.value}</span>
                         )}
                       </div>
                     </div>
@@ -90,14 +90,14 @@ export default function ContactPage() {
                 ))}
               </div>
 
-              <div className="card border-0 p-4" style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
-                <h6 className="fw-bold mb-3">Suivez-nous</h6>
-                <div className="d-flex gap-2">
+              <div className="bg-white rounded-xl border border-gray-200 shadow-sm border-0 p-6" style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+                <h6 className="font-bold mb-4">Suivez-nous</h6>
+                <div className="flex gap-2">
                   {socialLinks.map((s, i) => (
                     <a
                       key={i}
                       href="#"
-                      className={`${s.bg} text-white rounded-circle d-flex align-items-center justify-content-center text-decoration-none`}
+                      className={`${s.bg} text-white rounded-full flex items-center justify-center no-underline`}
                       style={{ width: 40, height: 40, fontSize: '0.85rem', fontWeight: 700 }}
                       aria-label={s.name}
                     >
@@ -107,12 +107,12 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              <div className="card border-0 p-4 mt-4" style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
-                <h6 className="fw-bold mb-3">Notre localisation</h6>
-                <div className="bg-secondary bg-opacity-10 rounded-3 d-flex align-items-center justify-content-center" style={{ height: 200 }}>
-                  <div className="text-center text-secondary">
-                    <div className="fs-1 mb-2">🗺️</div>
-                    <div className="small">Kinshasa, RDC</div>
+              <div className="bg-white rounded-xl border border-gray-200 shadow-sm border-0 p-6 mt-6" style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+                <h6 className="font-bold mb-4">Notre localisation</h6>
+                <div className="bg-gray-500/10 rounded-lg flex items-center justify-center" style={{ height: 200 }}>
+                  <div className="text-center text-gray-500">
+                    <div className="text-4xl mb-2">🗺️</div>
+                    <div className="text-sm">Kinshasa, RDC</div>
                   </div>
                 </div>
               </div>
@@ -121,13 +121,13 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="py-5 bg-light">
-        <div className="container py-4 text-center">
-          <h2 className="display-5 fw-bold mb-3">Prêt à commencer ?</h2>
-          <p className="lead text-secondary mx-auto mb-4" style={{ maxWidth: 500 }}>
+      <section className="py-12 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center">
+          <h2 className="text-5xl font-bold mb-4">Prêt à commencer ?</h2>
+          <p className="text-lg text-gray-500 mx-auto mb-6" style={{ maxWidth: 500 }}>
             Créez votre compte gratuitement et rejoignez des milliers de familles.
           </p>
-          <a href="/register" className="btn btn-primary btn-lg px-5 py-3 fw-semibold shadow-lg">
+          <a href="/register" className="inline-flex items-center justify-center font-medium rounded-lg transition-colors bg-indigo-500 text-white hover:bg-indigo-600 px-12 py-4 text-lg font-semibold shadow-lg">
             Créer un compte gratuit
           </a>
         </div>

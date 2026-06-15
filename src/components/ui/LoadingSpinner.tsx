@@ -12,13 +12,13 @@ const sizeMap: Record<string, { width: string; height: string; border: string }>
 export default function LoadingSpinner({ size = 'md', text }: LoadingSpinnerProps) {
   const s = sizeMap[size];
   return (
-    <div className="d-flex flex-column align-items-center justify-content-center gap-3 p-4">
+    <div className="flex flex-col items-center justify-center gap-4 p-6">
       <div
-        className="spinner-border text-primary"
+        className="animate-spin rounded-full border-current border-r-transparent text-indigo-500"
         role="status"
         style={{ width: s.width, height: s.height, borderWidth: s.border }}
       />
-      {text && <span className="text-muted">{text}</span>}
+      {text && <span className="text-gray-500">{text}</span>}
     </div>
   );
 }

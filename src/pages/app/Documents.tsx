@@ -30,11 +30,11 @@ const docTypeIcons: Record<string, string> = {
 };
 
 const docTypeColors: Record<string, string> = {
-  PDF: 'text-danger',
-  Excel: 'text-success',
-  Word: 'text-primary',
-  Image: 'text-info',
-  Autre: 'text-secondary',
+  PDF: 'text-red-500',
+  Excel: 'text-emerald-500',
+  Word: 'text-indigo-500',
+  Image: 'text-blue-500',
+  Autre: 'text-gray-500',
 };
 
 function formatFileSize(bytes: number | null): string {
@@ -117,48 +117,48 @@ export default function DocumentsPage() {
 
   return (
     <div>
-      <div className="d-flex align-items-center justify-content-between mb-4">
+      <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="h3 fw-bold mb-0">Documents</h1>
-          <p className="text-secondary small mb-0">{documents.length} document(s)</p>
+          <h1 className="text-2xl font-bold mb-0">Documents</h1>
+          <p className="text-gray-500 text-sm mb-0">{documents.length} document(s)</p>
         </div>
         <Button onClick={openCreate}>Uploader un document</Button>
       </div>
 
-      {error && <div className="alert alert-danger py-2">{error}</div>}
+      {error && <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-2 rounded-lg text-sm">{error}</div>}
 
       {documents.length === 0 && !error ? (
-        <div className="card border-0 shadow-sm">
-          <div className="card-body text-center py-5">
-            <p className="text-secondary mb-3">Aucun document.</p>
+        <div className="bg-white rounded-xl border-0 shadow-sm">
+          <div className="p-6 text-center py-12">
+            <p className="text-gray-500 mb-4">Aucun document.</p>
             <Button onClick={openCreate}>Ajouter un document</Button>
           </div>
         </div>
       ) : (
-        <div className="row g-3">
+        <div className="flex flex-wrap gap-4">
           {documents.map((doc) => (
-            <div key={doc.id} className="col-md-6 col-lg-4">
-              <div className="card border-0 shadow-sm h-100">
-                <div className="card-body">
-                  <div className="d-flex align-items-center gap-3 mb-3">
-                    <div className="rounded-circle bg-light d-flex align-items-center justify-content-center" style={{ width: 44, height: 44 }}>
-                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={docTypeColors[doc.type] || 'text-secondary'}>
+            <div key={doc.id} className="md:w-1/2 lg:w-1/3">
+              <div className="bg-white rounded-xl border-0 shadow-sm h-full">
+                <div className="p-6">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="rounded-full bg-gray-50 flex items-center justify-center" style={{ width: 44, height: 44 }}>
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={docTypeColors[doc.type] || 'text-gray-500'}>
                         <path d={docTypeIcons[doc.type] || docTypeIcons.Autre} />
                         <polyline points="14 2 14 8 20 8" />
                       </svg>
                     </div>
-                    <div className="flex-grow-1 min-w-0">
-                      <h6 className="fw-bold mb-0 text-truncate">{doc.name}</h6>
-                      <div className="d-flex gap-2 align-items-center">
-                        <span className={`badge bg-secondary bg-opacity-10 ${docTypeColors[doc.type] || 'text-secondary'}`} style={{ fontSize: '0.65rem' }}>{doc.type}</span>
-                        <span className="small text-secondary">{formatFileSize(doc.file_size)}</span>
+                    <div className="flex-1 min-w-0">
+                      <h6 className="font-bold mb-0 truncate">{doc.name}</h6>
+                      <div className="flex gap-2 items-center">
+                        <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-gray-100 ${docTypeColors[doc.type] || 'text-gray-500'}`} style={{ fontSize: '0.65rem' }}>{doc.type}</span>
+                        <span className="text-sm text-gray-500">{formatFileSize(doc.file_size)}</span>
                       </div>
                     </div>
                   </div>
-                  {doc.description && <p className="small text-secondary mb-2">{doc.description}</p>}
-                  <div className="d-flex gap-2 mt-3 pt-3 border-top">
-                    <a href={doc.file_url} target="_blank" rel="noopener noreferrer" className="btn btn-sm btn-outline-primary">Ouvrir</a>
-                    <Button variant="ghost" size="sm" className="text-danger" onClick={() => setDeleteId(doc.id)}>Supprimer</Button>
+                  {doc.description && <p className="text-sm text-gray-500 mb-2">{doc.description}</p>}
+                  <div className="flex gap-2 mt-4 pt-3 border-t">
+                    <a href={doc.file_url} target="_blank" rel="noopener noreferrer" className="border border-indigo-500 text-indigo-500 hover:bg-indigo-50 inline-flex items-center justify-center font-medium rounded-lg transition-colors px-3 py-1.5 text-sm">Ouvrir</a>
+                    <Button variant="ghost" size="sm" className="text-red-500" onClick={() => setDeleteId(doc.id)}>Supprimer</Button>
                   </div>
                 </div>
               </div>
@@ -173,7 +173,7 @@ export default function DocumentsPage() {
           <Input label="Nom du document" register={form.register('name')} error={form.formState.errors.name?.message} placeholder="Ex: Facture électricité" />
           <Select label="Type" options={docTypes.map((t) => ({ value: t, label: t }))} register={form.register('type')} error={form.formState.errors.type?.message} />
           <Input label="URL du fichier" register={form.register('file_url')} error={form.formState.errors.file_url?.message} placeholder="https://..." />
-          <div className="d-flex gap-2 mt-3">
+          <div className="flex gap-2 mt-4">
             <Button type="submit" loading={saving}>Ajouter</Button>
             <Button variant="secondary" onClick={() => setModalOpen(false)}>Annuler</Button>
           </div>
@@ -183,7 +183,7 @@ export default function DocumentsPage() {
       {/* Delete Modal */}
       <Modal isOpen={deleteId !== null} onClose={() => setDeleteId(null)} title="Confirmer la suppression">
         <p>Êtes-vous sûr de vouloir supprimer ce document ?</p>
-        <div className="d-flex gap-2">
+        <div className="flex gap-2">
           <Button variant="danger" onClick={confirmDelete} loading={deleting}>Supprimer</Button>
           <Button variant="secondary" onClick={() => setDeleteId(null)}>Annuler</Button>
         </div>

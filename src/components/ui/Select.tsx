@@ -21,12 +21,12 @@ export default function Select({
   placeholder,
 }: SelectProps) {
   return (
-    <div className="mb-3">
+    <div className="mb-4">
       {label && (
-        <label className="form-label fw-semibold text-sm mb-1">{label}</label>
+        <label className="font-semibold text-sm mb-1 block">{label}</label>
       )}
       <select
-        className={`form-select ${error ? 'is-invalid' : ''}`}
+        className={`block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none ${error ? 'border-red-500' : ''}`}
         {...register}
       >
         {placeholder && <option value="">{placeholder}</option>}
@@ -36,7 +36,7 @@ export default function Select({
           </option>
         ))}
       </select>
-      {error && <div className="invalid-feedback d-block">{error}</div>}
+      {error && <div className="text-red-500 text-sm mt-1">{error}</div>}
     </div>
   );
 }

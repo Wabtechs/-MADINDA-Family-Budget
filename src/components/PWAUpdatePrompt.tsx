@@ -40,12 +40,12 @@ export default function PWAUpdatePrompt() {
 
   if (registration) {
     return (
-      <div className="position-fixed bottom-0 start-0 end-0 p-3 z-3" style={{ zIndex: 9999 }}>
-        <div className="alert alert-info shadow-lg border-0 d-flex align-items-center justify-content-between mx-auto mb-0" style={{ maxWidth: 500 }}>
-          <span className="small">
+      <div className="fixed bottom-0 left-0 right-0 p-4" style={{ zIndex: 9999 }}>
+        <div className="bg-sky-50 text-sky-800 shadow-lg border-0 flex items-center justify-between mx-auto mb-0" style={{ maxWidth: 500 }}>
+          <span className="text-sm">
             <strong>Mise à jour disponible</strong> &mdash; Une nouvelle version de MADINDA est prête.
           </span>
-          <button className="btn btn-success btn-sm flex-shrink-0 ms-3" onClick={handleUpdateApp}>
+          <button className="inline-flex items-center justify-center font-medium rounded-lg transition-colors px-3 py-1.5 text-sm bg-emerald-500 text-white hover:bg-emerald-600 shrink-0 ml-4" onClick={handleUpdateApp}>
             Mettre à jour
           </button>
         </div>
@@ -55,8 +55,8 @@ export default function PWAUpdatePrompt() {
 
   if (!online) {
     return (
-      <div className="position-fixed top-0 start-0 end-0 p-2 z-3" style={{ zIndex: 9999 }}>
-        <div className="alert alert-warning text-center py-2 mb-0 rounded-0 border-0 small">
+      <div className="fixed top-0 left-0 right-0 p-2" style={{ zIndex: 9999 }}>
+        <div className="bg-amber-50 text-amber-800 text-center py-2 mb-0 rounded-none border-0 text-sm">
           <strong>Mode hors-ligne</strong> &mdash; Vous naviguez avec les données en cache.
         </div>
       </div>

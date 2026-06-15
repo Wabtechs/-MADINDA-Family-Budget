@@ -131,7 +131,7 @@ export default function BudgetsPage() {
 
   const getProgressInfo = (spent: number, amount: number) => {
     const pct = amount > 0 ? (spent / amount) * 100 : 0;
-    const color = pct > 100 ? 'bg-danger' : pct >= 80 ? 'bg-warning' : 'bg-success';
+    const color = pct > 100 ? 'bg-red-500' : pct >= 80 ? 'bg-yellow-500' : 'bg-emerald-500';
     return { pct: Math.min(pct, 100), color, label: pct > 100 ? 'Dépassé' : pct >= 80 ? 'Presque atteint' : 'Dans les limites' };
   };
 
@@ -142,83 +142,83 @@ export default function BudgetsPage() {
 
   return (
     <div>
-      <div className="d-flex align-items-center justify-content-between mb-4">
+      <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="h3 fw-bold mb-0">Budgets</h1>
-          <p className="text-secondary small mb-0">{budgets.length} budget(s)</p>
+          <h1 className="text-2xl font-bold mb-0">Budgets</h1>
+          <p className="text-gray-500 text-sm mb-0">{budgets.length} budget(s)</p>
         </div>
         <Button onClick={openCreate}>Nouveau budget</Button>
       </div>
 
-      {error && <div className="alert alert-danger py-2">{error}</div>}
+      {error && <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-2 rounded-lg text-sm">{error}</div>}
 
       {/* Summary */}
-      <div className="row g-3 mb-4">
-        <div className="col-md-4">
-          <div className="card border-0 shadow-sm bg-primary text-white">
-            <div className="card-body text-center py-3">
-              <div className="text-white text-opacity-75 small text-uppercase fw-semibold">Budget total</div>
-              <div className="fs-3 fw-bold">&euro;{totalBudgeted.toFixed(2)}</div>
+      <div className="flex flex-wrap gap-4 mb-6">
+        <div className="md:w-1/3">
+          <div className="bg-indigo-500 text-white rounded-xl border-0 shadow-sm">
+            <div className="p-6 text-center">
+              <div className="text-white/75 text-sm uppercase font-semibold">Budget total</div>
+              <div className="text-2xl font-bold">&euro;{totalBudgeted.toFixed(2)}</div>
             </div>
           </div>
         </div>
-        <div className="col-md-4">
-          <div className="card border-0 shadow-sm bg-warning text-white">
-            <div className="card-body text-center py-3">
-              <div className="text-white text-opacity-75 small text-uppercase fw-semibold">D&eacute;pens&eacute;</div>
-              <div className="fs-3 fw-bold">&euro;{totalSpent.toFixed(2)}</div>
+        <div className="md:w-1/3">
+          <div className="bg-yellow-500 text-white rounded-xl border-0 shadow-sm">
+            <div className="p-6 text-center">
+              <div className="text-white/75 text-sm uppercase font-semibold">Dépensé</div>
+              <div className="text-2xl font-bold">&euro;{totalSpent.toFixed(2)}</div>
             </div>
           </div>
         </div>
-        <div className="col-md-4">
-          <div className={`card border-0 shadow-sm text-white ${totalBudgeted - totalSpent >= 0 ? 'bg-success' : 'bg-danger'}`}>
-            <div className="card-body text-center py-3">
-              <div className="text-white text-opacity-75 small text-uppercase fw-semibold">Restant</div>
-              <div className="fs-3 fw-bold">&euro;{(totalBudgeted - totalSpent).toFixed(2)}</div>
+        <div className="md:w-1/3">
+          <div className={`text-white rounded-xl border-0 shadow-sm ${totalBudgeted - totalSpent >= 0 ? 'bg-emerald-500' : 'bg-red-500'}`}>
+            <div className="p-6 text-center">
+              <div className="text-white/75 text-sm uppercase font-semibold">Restant</div>
+              <div className="text-2xl font-bold">&euro;{(totalBudgeted - totalSpent).toFixed(2)}</div>
             </div>
           </div>
         </div>
       </div>
 
       {budgets.length === 0 && !error ? (
-        <div className="card border-0 shadow-sm">
-          <div className="card-body text-center py-5">
-            <p className="text-secondary mb-3">Aucun budget d&eacute;fini.</p>
-            <Button onClick={openCreate}>Cr&eacute;er un budget</Button>
+        <div className="bg-white rounded-xl border-0 shadow-sm">
+          <div className="p-6 text-center py-12">
+            <p className="text-gray-500 mb-4">Aucun budget défini.</p>
+            <Button onClick={openCreate}>Créer un budget</Button>
           </div>
         </div>
       ) : (
-        <div className="row g-3">
+        <div className="flex flex-wrap gap-4">
           {budgets.map((budget) => {
             const { pct, color, label } = getProgressInfo(budget.spent, budget.amount);
             return (
-              <div key={budget.id} className="col-md-6 col-lg-4">
-                <div className="card border-0 shadow-sm h-100">
-                  <div className="card-body">
-                    <div className="d-flex justify-content-between align-items-start mb-2">
+              <div key={budget.id} className="md:w-1/2 lg:w-1/3">
+                <div className="bg-white rounded-xl border-0 shadow-sm h-full">
+                  <div className="p-6">
+                    <div className="flex justify-between items-start mb-2">
                       <div>
-                        <h6 className="fw-bold mb-0">{budget.name}</h6>
-                        <span className="badge bg-secondary bg-opacity-10 text-secondary" style={{ fontSize: '0.7rem' }}>{periodLabels[budget.period] || budget.period}</span>
+                        <h6 className="font-bold mb-0">{budget.name}</h6>
+                        <span className="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-700" style={{ fontSize: '0.7rem' }}>{periodLabels[budget.period] || budget.period}</span>
                       </div>
-                      <span className={`badge ${pct >= 100 ? 'bg-danger' : pct >= 80 ? 'bg-warning' : 'bg-success'}`}>{label}</span>
+                      <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${pct >= 100 ? 'bg-red-500 text-white' : pct >= 80 ? 'bg-yellow-500 text-white' : 'bg-emerald-500 text-white'}`}>{label}</span>
                     </div>
-                    {budget.category_id && <p className="small text-secondary mb-2">Cat&eacute;gorie: {categories.find((c) => c.id === budget.category_id)?.name || '-'}</p>}
+                    {budget.category_id && <p className="text-sm text-gray-500 mb-2">Catégorie: {categories.find((c) => c.id === budget.category_id)?.name || '-'}</p>}
                     <div className="mb-2">
-                      <div className="d-flex justify-content-between small mb-1">
-                        <span>&euro;{budget.spent.toFixed(2)} d&eacute;pens&eacute;s</span>
-                        <span className="fw-semibold">{budget.amount > 0 ? Math.round((budget.spent / budget.amount) * 100) : 0}%</span>
+                      <div className="flex justify-between text-sm mb-1">
+                        <span>&euro;{budget.spent.toFixed(2)} dépensés</span>
+                        <span className="font-semibold">{budget.amount > 0 ? Math.round((budget.spent / budget.amount) * 100) : 0}%</span>
                       </div>
-                      <div className="progress" style={{ height: 8 }}>
-                        <div className={`progress-bar ${color}`} style={{ width: `${pct}%` }} />
+                      <div className="h-2 bg-gray-200 rounded-full overflow-hidden" style={{ height: 8 }}>
+                        <div className={`h-full rounded-full ${color}`} style={{ width: `${pct}%` }} />
                       </div>
                     </div>
-                    <div className="d-flex justify-content-between small text-secondary">
+                    <div className="flex justify-between text-sm text-gray-500">
                       <span>Objectif: &euro;{budget.amount.toFixed(2)}</span>
                       <span>Restant: &euro;{Math.max(0, budget.amount - budget.spent).toFixed(2)}</span>
                     </div>
-                    <div className="d-flex gap-2 mt-3 pt-3 border-top">
+                    <div className="flex gap-2 mt-4 pt-3 border-t">
                       <Button variant="ghost" size="sm" onClick={() => openEdit(budget)}>Modifier</Button>
-                      <Button variant="ghost" size="sm" className="text-danger" onClick={() => setDeleteId(budget.id)}>Supprimer</Button>
+                      <Button variant="ghost" size="sm" className="text-red-500" onClick={() => setDeleteId(budget.id)}>Supprimer</Button>
                     </div>
                   </div>
                 </div>
@@ -237,7 +237,7 @@ export default function BudgetsPage() {
           <Select label="Période" options={Object.entries(periodLabels).map(([v, l]) => ({ value: v, label: l }))} register={form.register('period')} error={form.formState.errors.period?.message} />
           <Input label="Date de début" type="date" register={form.register('start_date')} error={form.formState.errors.start_date?.message} />
           <Input label="Date de fin" type="date" register={form.register('end_date')} error={form.formState.errors.end_date?.message} />
-          <div className="d-flex gap-2 mt-3">
+          <div className="flex gap-2 mt-4">
             <Button type="submit" loading={saving}>{editing ? 'Enregistrer' : 'Créer'}</Button>
             <Button variant="secondary" onClick={() => setModalOpen(false)}>Annuler</Button>
           </div>
@@ -247,7 +247,7 @@ export default function BudgetsPage() {
       {/* Delete Modal */}
       <Modal isOpen={deleteId !== null} onClose={() => setDeleteId(null)} title="Confirmer la suppression">
         <p>Êtes-vous sûr de vouloir supprimer ce budget ?</p>
-        <div className="d-flex gap-2">
+        <div className="flex gap-2">
           <Button variant="danger" onClick={confirmDelete} loading={deleting}>Supprimer</Button>
           <Button variant="secondary" onClick={() => setDeleteId(null)}>Annuler</Button>
         </div>

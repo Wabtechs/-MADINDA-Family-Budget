@@ -40,19 +40,19 @@ export default function DashboardPage() {
 
   if (!currentEntity) {
     return (
-      <div className="text-center py-5">
-        <h2 className="fw-bold mb-2">Bienvenue sur MADINDA</h2>
-        <p className="text-secondary mb-4">Créez votre entité pour commencer à gérer votre budget.</p>
-        <Link to="/app/profile" className="btn btn-primary">Configurer mon compte</Link>
+      <div className="text-center py-12">
+        <h2 className="font-bold mb-2">Bienvenue sur MADINDA</h2>
+        <p className="text-gray-500 mb-6">Créez votre entité pour commencer à gérer votre budget.</p>
+        <Link to="/app/profile" className="inline-flex items-center justify-center font-medium rounded-lg transition-colors bg-indigo-500 text-white hover:bg-indigo-600 px-4 py-2">Configurer mon compte</Link>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="text-center py-5">
-        <p className="text-danger mb-4">{error}</p>
-        <button className="btn btn-primary" onClick={() => window.location.reload()}>Réessayer</button>
+      <div className="text-center py-12">
+        <p className="text-red-500 mb-6">{error}</p>
+        <button className="inline-flex items-center justify-center font-medium rounded-lg transition-colors bg-indigo-500 text-white hover:bg-indigo-600 px-4 py-2" onClick={() => window.location.reload()}>Réessayer</button>
       </div>
     );
   }
@@ -61,53 +61,53 @@ export default function DashboardPage() {
 
   return (
     <div>
-      <div className="mb-4">
-        <h1 className="h3 fw-bold mb-1">Bonjour, {user?.nom}</h1>
-        <p className="text-secondary small">{currentEntity.name}</p>
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold mb-1">Bonjour, {user?.nom}</h1>
+        <p className="text-gray-500 text-sm">{currentEntity.name}</p>
       </div>
 
       {/* Summary Cards */}
-      <div className="row g-3 mb-4">
-        <div className="col-6 col-md-3">
-          <div className="card border-0 shadow-sm h-100">
-            <div className="card-body text-center py-3">
-              <div className="small text-secondary text-uppercase fw-semibold">Solde actuel</div>
-              <div className="fs-3 fw-bold text-dark">&euro;{(data?.currentBalance ?? 0).toFixed(2)}</div>
+      <div className="flex flex-wrap gap-4 mb-6">
+        <div className="w-1/2 md:w-1/4">
+          <div className="bg-white rounded-xl border-0 shadow-sm h-full">
+            <div className="p-6 text-center">
+              <div className="text-sm text-gray-500 uppercase font-semibold">Solde actuel</div>
+              <div className="text-2xl font-bold text-gray-900">&euro;{(data?.currentBalance ?? 0).toFixed(2)}</div>
             </div>
           </div>
         </div>
-        <div className="col-6 col-md-3">
-          <div className="card border-0 shadow-sm bg-primary text-white h-100">
-            <div className="card-body text-center py-3">
-              <div className="small text-white text-opacity-75 text-uppercase fw-semibold">Revenus du mois</div>
-              <div className="fs-3 fw-bold">&euro;{(data?.monthlyIncome ?? 0).toFixed(2)}</div>
+        <div className="w-1/2 md:w-1/4">
+          <div className="bg-indigo-500 text-white rounded-xl border-0 shadow-sm h-full">
+            <div className="p-6 text-center">
+              <div className="text-white/75 text-sm uppercase font-semibold">Revenus du mois</div>
+              <div className="text-2xl font-bold">&euro;{(data?.monthlyIncome ?? 0).toFixed(2)}</div>
             </div>
           </div>
         </div>
-        <div className="col-6 col-md-3">
-          <div className="card border-0 shadow-sm bg-danger text-white h-100">
-            <div className="card-body text-center py-3">
-              <div className="small text-white text-opacity-75 text-uppercase fw-semibold">D&eacute;penses du mois</div>
-              <div className="fs-3 fw-bold">&euro;{(data?.monthlyExpense ?? 0).toFixed(2)}</div>
+        <div className="w-1/2 md:w-1/4">
+          <div className="bg-red-500 text-white rounded-xl border-0 shadow-sm h-full">
+            <div className="p-6 text-center">
+              <div className="text-white/75 text-sm uppercase font-semibold">Dépenses du mois</div>
+              <div className="text-2xl font-bold">&euro;{(data?.monthlyExpense ?? 0).toFixed(2)}</div>
             </div>
           </div>
         </div>
-        <div className="col-6 col-md-3">
-          <div className={`card border-0 shadow-sm h-100 ${(data?.monthlyProfit ?? 0) >= 0 ? 'bg-success' : 'bg-danger'} text-white`}>
-            <div className="card-body text-center py-3">
-              <div className="small text-white text-opacity-75 text-uppercase fw-semibold">B&eacute;n&eacute;fice/Perte</div>
-              <div className="fs-3 fw-bold">&euro;{(data?.monthlyProfit ?? 0).toFixed(2)}</div>
+        <div className="w-1/2 md:w-1/4">
+          <div className={`${(data?.monthlyProfit ?? 0) >= 0 ? 'bg-emerald-500' : 'bg-red-500'} text-white rounded-xl border-0 shadow-sm h-full`}>
+            <div className="p-6 text-center">
+              <div className="text-white/75 text-sm uppercase font-semibold">Bénéfice/Perte</div>
+              <div className="text-2xl font-bold">&euro;{(data?.monthlyProfit ?? 0).toFixed(2)}</div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Charts Row */}
-      <div className="row g-4 mb-4">
-        <div className="col-lg-7">
-          <div className="card border-0 shadow-sm h-100">
-            <div className="card-body">
-              <h5 className="fw-bold mb-3">Revenus vs D&eacute;penses (6 mois)</h5>
+      <div className="flex flex-wrap gap-6 mb-6">
+        <div className="lg:w-7/12">
+          <div className="bg-white rounded-xl border-0 shadow-sm h-full">
+            <div className="p-6">
+              <h5 className="font-bold mb-4">Revenus vs Dépenses (6 mois)</h5>
               {(data?.monthlyComparison?.length ?? 0) > 0 ? (
                 <ResponsiveContainer width="100%" height={280}>
                   <BarChart data={data?.monthlyComparison || []}>
@@ -120,15 +120,15 @@ export default function DashboardPage() {
                   </BarChart>
                 </ResponsiveContainer>
               ) : (
-                <p className="text-secondary text-center py-5 mb-0">Aucune donn&eacute;e mensuelle.</p>
+                <p className="text-gray-500 text-center py-12 mb-0">Aucune donnée mensuelle.</p>
               )}
             </div>
           </div>
         </div>
-        <div className="col-lg-5">
-          <div className="card border-0 shadow-sm h-100">
-            <div className="card-body">
-              <h5 className="fw-bold mb-3">R&eacute;partition des d&eacute;penses</h5>
+        <div className="lg:w-5/12">
+          <div className="bg-white rounded-xl border-0 shadow-sm h-full">
+            <div className="p-6">
+              <h5 className="font-bold mb-4">Répartition des dépenses</h5>
               {pieData.length > 0 ? (
                 <ResponsiveContainer width="100%" height={280}>
                   <PieChart>
@@ -141,7 +141,7 @@ export default function DashboardPage() {
                   </PieChart>
                 </ResponsiveContainer>
               ) : (
-                <p className="text-secondary text-center py-5 mb-0">Aucune d&eacute;pense.</p>
+                <p className="text-gray-500 text-center py-12 mb-0">Aucune dépense.</p>
               )}
             </div>
           </div>
@@ -149,60 +149,60 @@ export default function DashboardPage() {
       </div>
 
       {/* Budget Status + Recent Transactions */}
-      <div className="row g-4">
-        <div className="col-lg-6">
-          <div className="card border-0 shadow-sm">
-            <div className="card-body">
-              <h5 className="fw-bold mb-3">&Eacute;tat des budgets</h5>
+      <div className="flex flex-wrap gap-6">
+        <div className="lg:w-1/2">
+          <div className="bg-white rounded-xl border-0 shadow-sm">
+            <div className="p-6">
+              <h5 className="font-bold mb-4">État des budgets</h5>
               {(data?.budgetStatus?.length ?? 0) > 0 ? (
-                <div className="d-flex flex-column gap-3">
+                <div className="flex flex-col gap-4">
                   {data?.budgetStatus?.map((b, i) => {
                     const total = b.total || 0;
                     const used = b.used || 0;
                     const pct = total > 0 ? Math.round((used / total) * 100) : 0;
-                    const barColor = pct > 100 ? 'bg-danger' : pct >= 80 ? 'bg-warning' : 'bg-success';
+                    const barColor = pct > 100 ? 'bg-red-500' : pct >= 80 ? 'bg-yellow-500' : 'bg-emerald-500';
                     return (
                       <div key={i}>
-                        <div className="d-flex justify-content-between small mb-1">
-                          <span className="fw-semibold">Budget {i + 1}</span>
+                        <div className="flex justify-between text-sm mb-1">
+                          <span className="font-semibold">Budget {i + 1}</span>
                           <span>&euro;{used.toFixed(0)} / &euro;{total.toFixed(0)} ({pct}%)</span>
                         </div>
-                        <div className="progress" style={{ height: 8 }}>
-                          <div className={`progress-bar ${barColor}`} style={{ width: `${Math.min(pct, 100)}%` }} />
+                        <div className="h-2 bg-gray-200 rounded-full overflow-hidden" style={{ height: 8 }}>
+                          <div className={`h-full rounded-full ${barColor}`} style={{ width: `${Math.min(pct, 100)}%` }} />
                         </div>
                       </div>
                     );
                   })}
                 </div>
               ) : (
-                <p className="text-secondary mb-0">Aucun budget d&eacute;fini.</p>
+                <p className="text-gray-500 mb-0">Aucun budget défini.</p>
               )}
             </div>
           </div>
         </div>
-        <div className="col-lg-6">
-          <div className="card border-0 shadow-sm">
-            <div className="card-body">
-              <h5 className="fw-bold mb-3">Transactions r&eacute;centes</h5>
+        <div className="lg:w-1/2">
+          <div className="bg-white rounded-xl border-0 shadow-sm">
+            <div className="p-6">
+              <h5 className="font-bold mb-4">Transactions récentes</h5>
               {(data?.recentTransactions?.length ?? 0) > 0 ? (
-                <div className="list-group list-group-flush">
+                <div className="divide-y divide-gray-100">
                   {data?.recentTransactions?.slice(0, 10).map((tx) => (
-                    <div key={tx.id} className="list-group-item d-flex align-items-center gap-3 px-0 border-0 border-bottom">
-                      <div className={`rounded-circle d-flex align-items-center justify-content-center ${tx.type === 'income' ? 'bg-success bg-opacity-10' : tx.type === 'expense' ? 'bg-danger bg-opacity-10' : 'bg-info bg-opacity-10'}`} style={{ width: 36, height: 36 }}>
-                        <span className={tx.type === 'income' ? 'text-success' : tx.type === 'expense' ? 'text-danger' : 'text-info'}>{tx.type === 'income' ? '+' : '-'}</span>
+                    <div key={tx.id} className="px-4 py-3 flex items-center gap-3">
+                      <div className={`rounded-full flex items-center justify-center ${tx.type === 'income' ? 'bg-emerald-100' : tx.type === 'expense' ? 'bg-red-100' : 'bg-blue-100'}`} style={{ width: 36, height: 36 }}>
+                        <span className={tx.type === 'income' ? 'text-emerald-500' : tx.type === 'expense' ? 'text-red-500' : 'text-blue-500'}>{tx.type === 'income' ? '+' : '-'}</span>
                       </div>
-                      <div className="flex-grow-1 min-w-0">
-                        <div className="fw-semibold small text-truncate">{tx.description || (tx.type === 'income' ? 'Revenu' : tx.type === 'expense' ? 'Dépense' : 'Transfert')}</div>
-                        <div className="text-secondary" style={{ fontSize: '0.7rem' }}>{new Date(tx.date).toLocaleDateString('fr-FR')}</div>
+                      <div className="flex-1 min-w-0">
+                        <div className="font-semibold text-sm truncate">{tx.description || (tx.type === 'income' ? 'Revenu' : tx.type === 'expense' ? 'Dépense' : 'Transfert')}</div>
+                        <div className="text-gray-500" style={{ fontSize: '0.7rem' }}>{new Date(tx.date).toLocaleDateString('fr-FR')}</div>
                       </div>
-                      <div className={`fw-bold small flex-shrink-0 ${tx.type === 'income' ? 'text-success' : 'text-danger'}`}>
+                      <div className={`font-bold text-sm shrink-0 ${tx.type === 'income' ? 'text-emerald-500' : 'text-red-500'}`}>
                         {tx.type === 'income' ? '+' : '-'}&euro;{tx.amount.toFixed(2)}
                       </div>
                     </div>
                   ))}
                 </div>
               ) : (
-                <p className="text-secondary mb-0">Aucune transaction r&eacute;cente.</p>
+                <p className="text-gray-500 mb-0">Aucune transaction récente.</p>
               )}
             </div>
           </div>

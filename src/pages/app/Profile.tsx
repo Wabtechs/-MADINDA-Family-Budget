@@ -75,24 +75,24 @@ export default function ProfilePage() {
 
   return (
     <div>
-      <h1 className="h3 fw-bold mb-4">Mon Profil</h1>
+      <h1 className="text-2xl font-bold mb-6">Mon Profil</h1>
 
-      <div className="row g-4">
+      <div className="flex flex-wrap gap-6">
         {/* Avatar Card */}
-        <div className="col-lg-4">
-          <div className="card border-0 shadow-sm text-center py-4">
-            <div className="card-body">
-              <div className="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 fs-2 fw-bold" style={{ width: 80, height: 80 }}>
+        <div className="lg:w-1/3">
+          <div className="bg-white rounded-xl border-0 shadow-sm text-center py-6">
+            <div className="p-6">
+              <div className="bg-indigo-500 text-white rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold" style={{ width: 80, height: 80 }}>
                 {(user?.nom || 'U')[0]}
               </div>
-              <h5 className="fw-bold mb-1">{user?.nom}</h5>
-              <p className="text-secondary small mb-0">{user?.email}</p>
-              <span className="badge bg-primary bg-opacity-10 text-primary mt-2">{user?.role}</span>
+              <h5 className="font-bold mb-1">{user?.nom}</h5>
+              <p className="text-gray-500 text-sm mb-0">{user?.email}</p>
+              <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-indigo-100 text-indigo-700 mt-2">{user?.role}</span>
               <hr />
-              <div className="text-start small">
-                <div className="d-flex justify-content-between mb-1">
-                  <span className="text-secondary">Membre depuis</span>
-                  <span className="fw-semibold">{user?.created_at ? new Date(user.created_at).toLocaleDateString('fr-FR') : '-'}</span>
+              <div className="text-start text-sm">
+                <div className="flex justify-between mb-1">
+                  <span className="text-gray-500">Membre depuis</span>
+                  <span className="font-semibold">{user?.created_at ? new Date(user.created_at).toLocaleDateString('fr-FR') : '-'}</span>
                 </div>
               </div>
             </div>
@@ -100,30 +100,30 @@ export default function ProfilePage() {
         </div>
 
         {/* Profile Edit */}
-        <div className="col-lg-8">
-          <div className="card border-0 shadow-sm mb-4">
-            <div className="card-body">
-              <h5 className="fw-bold mb-3">Informations personnelles</h5>
-              {profileSuccess && <div className="alert alert-success py-2">{profileSuccess}</div>}
-              {profileError && <div className="alert alert-danger py-2">{profileError}</div>}
+        <div className="lg:w-2/3">
+          <div className="bg-white rounded-xl border-0 shadow-sm mb-6">
+            <div className="p-6">
+              <h5 className="font-bold mb-4">Informations personnelles</h5>
+              {profileSuccess && <div className="bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-2 rounded-lg text-sm">{profileSuccess}</div>}
+              {profileError && <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-2 rounded-lg text-sm">{profileError}</div>}
               <form onSubmit={profileForm.handleSubmit(handleProfileSubmit)}>
                 <Input label="Nom complet" register={profileForm.register('nom')} error={profileForm.formState.errors.nom?.message} />
                 <Input label="Email" type="email" register={profileForm.register('email')} error={profileForm.formState.errors.email?.message} />
                 <Input label="Téléphone" type="tel" register={profileForm.register('phone')} error={profileForm.formState.errors.phone?.message} placeholder="Non renseigné" />
-                <div className="d-flex gap-2">
+                <div className="flex gap-2">
                   <Button type="submit" loading={savingProfile}>Enregistrer</Button>
-                  <Button variant="danger" onClick={logout}>D&eacute;connexion</Button>
+                  <Button variant="danger" onClick={logout}>Déconnexion</Button>
                 </div>
               </form>
             </div>
           </div>
 
           {/* Password Change */}
-          <div className="card border-0 shadow-sm">
-            <div className="card-body">
-              <h5 className="fw-bold mb-3">Changer le mot de passe</h5>
-              {passwordSuccess && <div className="alert alert-success py-2">{passwordSuccess}</div>}
-              {passwordError && <div className="alert alert-danger py-2">{passwordError}</div>}
+          <div className="bg-white rounded-xl border-0 shadow-sm">
+            <div className="p-6">
+              <h5 className="font-bold mb-4">Changer le mot de passe</h5>
+              {passwordSuccess && <div className="bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-2 rounded-lg text-sm">{passwordSuccess}</div>}
+              {passwordError && <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-2 rounded-lg text-sm">{passwordError}</div>}
               <form onSubmit={passwordForm.handleSubmit(handlePasswordSubmit)}>
                 <Input label="Mot de passe actuel" type="password" register={passwordForm.register('current_password')} error={passwordForm.formState.errors.current_password?.message} />
                 <Input label="Nouveau mot de passe" type="password" register={passwordForm.register('new_password')} error={passwordForm.formState.errors.new_password?.message} />

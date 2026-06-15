@@ -88,48 +88,48 @@ export default function TransfersPage() {
 
   return (
     <div>
-      <div className="d-flex align-items-center justify-content-between mb-4">
+      <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="h3 fw-bold mb-0">Transferts</h1>
-          <p className="text-secondary small mb-0">{transfers.length} transfert(s)</p>
+          <h1 className="text-2xl font-bold mb-0">Transferts</h1>
+          <p className="text-gray-500 text-sm mb-0">{transfers.length} transfert(s)</p>
         </div>
         <Button onClick={openCreate}>Nouveau transfert</Button>
       </div>
 
-      {error && <div className="alert alert-danger py-2">{error}</div>}
+      {error && <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-2 rounded-lg text-sm">{error}</div>}
 
       {transfers.length === 0 && !error ? (
-        <div className="card border-0 shadow-sm">
-          <div className="card-body text-center py-5">
-            <p className="text-secondary mb-3">Aucun transfert pour le moment.</p>
+        <div className="bg-white rounded-xl border-0 shadow-sm">
+          <div className="p-6 text-center py-12">
+            <p className="text-gray-500 mb-4">Aucun transfert pour le moment.</p>
             <Button onClick={openCreate}>Effectuer un transfert</Button>
           </div>
         </div>
       ) : (
-        <div className="row g-3">
+        <div className="flex flex-wrap gap-4">
           {transfers.map((tr) => (
-            <div key={tr.id} className="col-md-6">
-              <div className="card border-0 shadow-sm">
-                <div className="card-body">
-                  <div className="d-flex align-items-center gap-3">
-                    <div className="rounded-circle bg-info bg-opacity-10 d-flex align-items-center justify-content-center" style={{ width: 40, height: 40 }}>
+            <div key={tr.id} className="md:w-1/2">
+              <div className="bg-white rounded-xl border-0 shadow-sm">
+                <div className="p-6">
+                  <div className="flex items-center gap-3">
+                    <div className="rounded-full bg-blue-100 flex items-center justify-center" style={{ width: 40, height: 40 }}>
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <line x1="12" y1="5" x2="12" y2="19" /><polyline points="19 12 12 19 5 12" />
                       </svg>
                     </div>
-                    <div className="flex-grow-1 min-w-0">
-                      <div className="d-flex justify-content-between align-items-center">
-                        <div className="small fw-semibold text-truncate">{tr.from_account_name || 'Compte source'}</div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex justify-between items-center">
+                        <div className="text-sm font-semibold truncate">{tr.from_account_name || 'Compte source'}</div>
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                           <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
                         </svg>
-                        <div className="small fw-semibold text-truncate">{tr.to_account_name || 'Compte destination'}</div>
+                        <div className="text-sm font-semibold truncate">{tr.to_account_name || 'Compte destination'}</div>
                       </div>
-                      <div className="d-flex justify-content-between align-items-center mt-2">
-                        <span className="fw-bold fs-5 text-info">&euro;{tr.amount.toFixed(2)}</span>
-                        <span className="text-secondary" style={{ fontSize: '0.75rem' }}>{new Date(tr.date).toLocaleDateString('fr-FR')}</span>
+                      <div className="flex justify-between items-center mt-2">
+                        <span className="font-bold text-lg text-blue-500">&euro;{tr.amount.toFixed(2)}</span>
+                        <span className="text-gray-500" style={{ fontSize: '0.75rem' }}>{new Date(tr.date).toLocaleDateString('fr-FR')}</span>
                       </div>
-                      {tr.description && <p className="small text-secondary mt-1 mb-0">{tr.description}</p>}
+                      {tr.description && <p className="text-sm text-gray-500 mt-1 mb-0">{tr.description}</p>}
                     </div>
                   </div>
                 </div>
@@ -147,7 +147,7 @@ export default function TransfersPage() {
           <Input label="Montant" type="number" step="0.01" register={form.register('amount')} error={form.formState.errors.amount?.message} />
           <Input label="Date" type="date" register={form.register('date')} error={form.formState.errors.date?.message} />
           <Input label="Description" register={form.register('description')} error={form.formState.errors.description?.message} />
-          <div className="d-flex gap-2 mt-3">
+          <div className="flex gap-2 mt-4">
             <Button type="submit" loading={saving}>Effectuer le transfert</Button>
             <Button variant="secondary" onClick={() => setModalOpen(false)}>Annuler</Button>
           </div>
