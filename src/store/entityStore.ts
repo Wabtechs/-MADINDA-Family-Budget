@@ -11,7 +11,7 @@ interface EntityStore {
   fetchEntity: (id: number) => Promise<void>;
 }
 
-const useEntityStore = create<EntityStore>((set) => ({
+const useEntityStore = create<EntityStore>((set, get) => ({
   currentEntity: null,
   entities: [],
   loading: false,
@@ -20,7 +20,7 @@ const useEntityStore = create<EntityStore>((set) => ({
     set({ loading: true });
     try {
       const res = await entityApi.list();
-      const entities = res.data?.data || [];
+      const entities: Entity[] = res.data?.data || [];
       const current = entities.find((e) => e.id === get().currentEntity?.id) || entities[0] || null;
       set({ entities, loading: false, currentEntity: current });
     } catch {

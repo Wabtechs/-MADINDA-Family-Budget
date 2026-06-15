@@ -28,17 +28,6 @@ export default function PWAUpdatePrompt() {
         }
       });
 
-      const handleUpdateFound = (event: Event) => {
-        const target = event.target as ServiceWorkerRegistration;
-        if (target.installing) {
-          target.installing.addEventListener('statechange', () => {
-            if (target.waiting) {
-              setRegistration({ waiting: target.waiting, update: () => target.waiting?.postMessage({ type: 'SKIP_WAITING' }) });
-            }
-          });
-        }
-      };
-
       navigator.serviceWorker.addEventListener('controllerchange', () => {
         window.location.reload();
       });
