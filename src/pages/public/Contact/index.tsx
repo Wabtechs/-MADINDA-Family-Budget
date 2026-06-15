@@ -7,21 +7,21 @@ const contactInfo = [
 const socialLinks = [
   { name: 'Facebook', icon: 'f', bg: 'bg-blue-600' },
   { name: 'Twitter', icon: '𝕏', bg: 'bg-dark' },
-  { name: 'LinkedIn', icon: 'in', bg: 'bg-blue-700' },
-  { name: 'Instagram', icon: '📷', bg: 'bg-gradient-to-br from-purple-500 to-pink-500' },
+  { name: 'LinkedIn', icon: 'in', bg: 'bg-primary' },
+  { name: 'Instagram', icon: '📷', bg: 'gradient-purple-pink' },
 ];
 
 export default function ContactPage() {
   return (
     <>
-      <section className="bg-gradient-to-br from-indigo-900 via-purple-900 to-slate-900 text-white py-5 position-relative overflow-hidden">
+      <section className="hero-gradient text-white py-5 position-relative overflow-hidden">
         <div className="position-absolute top-0 start-0 w-100 h-100 opacity-10" style={{
           backgroundImage: 'radial-gradient(circle at 25% 75%, rgba(255,255,255,0.15) 0%, transparent 50%)',
         }} />
         <div className="container position-relative py-5 text-center">
-          <span className="d-inline-block bg-white/10 text-white rounded-pill px-3 py-1 mb-3 fs-6 fw-semibold">Contact</span>
+          <span className="d-inline-block bg-white bg-opacity-10 text-white rounded-pill px-3 py-1 mb-3 fs-6 fw-semibold">Contact</span>
           <h1 className="display-4 fw-bold mb-3">Contactez-nous</h1>
-          <p className="lead text-white/75 mx-auto" style={{ maxWidth: 600 }}>
+          <p className="lead text-white text-opacity-75 mx-auto" style={{ maxWidth: 600 }}>
             Une question ? Une suggestion ? Notre équipe est là pour vous aider.
           </p>
         </div>
@@ -74,7 +74,7 @@ export default function ContactPage() {
                 {contactInfo.map((info, i) => (
                   <div key={i} className="card border-0 p-3" style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
                     <div className="d-flex align-items-center gap-3">
-                      <div className="bg-primary/10 text-primary rounded-2 d-flex align-items-center justify-content-center flex-shrink-0" style={{ width: 48, height: 48, fontSize: '1.3rem' }}>
+                      <div className="bg-primary bg-opacity-10 text-primary rounded-2 d-flex align-items-center justify-content-center flex-shrink-0" style={{ width: 48, height: 48, fontSize: '1.3rem' }}>
                         {info.icon}
                       </div>
                       <div>
@@ -109,7 +109,7 @@ export default function ContactPage() {
 
               <div className="card border-0 p-4 mt-4" style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
                 <h6 className="fw-bold mb-3">Notre localisation</h6>
-                <div className="bg-secondary/10 rounded-3 d-flex align-items-center justify-content-center" style={{ height: 200 }}>
+                <div className="bg-secondary bg-opacity-10 rounded-3 d-flex align-items-center justify-content-center" style={{ height: 200 }}>
                   <div className="text-center text-secondary">
                     <div className="fs-1 mb-2">🗺️</div>
                     <div className="small">Kinshasa, RDC</div>

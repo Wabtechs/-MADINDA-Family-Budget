@@ -79,7 +79,7 @@ export default function DashboardPage() {
         <div className="col-6 col-md-3">
           <div className="card border-0 shadow-sm bg-primary text-white h-100">
             <div className="card-body text-center py-3">
-              <div className="small text-white/75 text-uppercase fw-semibold">Revenus du mois</div>
+              <div className="small text-white text-opacity-75 text-uppercase fw-semibold">Revenus du mois</div>
               <div className="fs-3 fw-bold">&euro;{(data?.monthlyIncome ?? 0).toFixed(2)}</div>
             </div>
           </div>
@@ -87,7 +87,7 @@ export default function DashboardPage() {
         <div className="col-6 col-md-3">
           <div className="card border-0 shadow-sm bg-danger text-white h-100">
             <div className="card-body text-center py-3">
-              <div className="small text-white/75 text-uppercase fw-semibold">D&eacute;penses du mois</div>
+              <div className="small text-white text-opacity-75 text-uppercase fw-semibold">D&eacute;penses du mois</div>
               <div className="fs-3 fw-bold">&euro;{(data?.monthlyExpense ?? 0).toFixed(2)}</div>
             </div>
           </div>
@@ -95,7 +95,7 @@ export default function DashboardPage() {
         <div className="col-6 col-md-3">
           <div className={`card border-0 shadow-sm h-100 ${(data?.monthlyProfit ?? 0) >= 0 ? 'bg-success' : 'bg-danger'} text-white`}>
             <div className="card-body text-center py-3">
-              <div className="small text-white/75 text-uppercase fw-semibold">B&eacute;n&eacute;fice/Perte</div>
+              <div className="small text-white text-opacity-75 text-uppercase fw-semibold">B&eacute;n&eacute;fice/Perte</div>
               <div className="fs-3 fw-bold">&euro;{(data?.monthlyProfit ?? 0).toFixed(2)}</div>
             </div>
           </div>
@@ -188,7 +188,7 @@ export default function DashboardPage() {
                 <div className="list-group list-group-flush">
                   {data?.recentTransactions?.slice(0, 10).map((tx) => (
                     <div key={tx.id} className="list-group-item d-flex align-items-center gap-3 px-0 border-0 border-bottom">
-                      <div className={`rounded-circle d-flex align-items-center justify-content-center ${tx.type === 'income' ? 'bg-success/10' : tx.type === 'expense' ? 'bg-danger/10' : 'bg-info/10'}`} style={{ width: 36, height: 36 }}>
+                      <div className={`rounded-circle d-flex align-items-center justify-content-center ${tx.type === 'income' ? 'bg-success bg-opacity-10' : tx.type === 'expense' ? 'bg-danger bg-opacity-10' : 'bg-info bg-opacity-10'}`} style={{ width: 36, height: 36 }}>
                         <span className={tx.type === 'income' ? 'text-success' : tx.type === 'expense' ? 'text-danger' : 'text-info'}>{tx.type === 'income' ? '+' : '-'}</span>
                       </div>
                       <div className="flex-grow-1 min-w-0">

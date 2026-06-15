@@ -150,7 +150,7 @@ export default function DocumentsPage() {
                     <div className="flex-grow-1 min-w-0">
                       <h6 className="fw-bold mb-0 text-truncate">{doc.name}</h6>
                       <div className="d-flex gap-2 align-items-center">
-                        <span className={`badge bg-secondary/10 ${docTypeColors[doc.type] || 'text-secondary'}`} style={{ fontSize: '0.65rem' }}>{doc.type}</span>
+                        <span className={`badge bg-secondary bg-opacity-10 ${docTypeColors[doc.type] || 'text-secondary'}`} style={{ fontSize: '0.65rem' }}>{doc.type}</span>
                         <span className="small text-secondary">{formatFileSize(doc.file_size)}</span>
                       </div>
                     </div>

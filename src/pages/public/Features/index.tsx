@@ -94,14 +94,14 @@ const features = [
 export default function FeaturesPage() {
   return (
     <>
-      <section className="bg-gradient-to-br from-indigo-900 via-purple-900 to-slate-900 text-white py-5 position-relative overflow-hidden">
+      <section className="hero-gradient text-white py-5 position-relative overflow-hidden">
         <div className="position-absolute top-0 start-0 w-100 h-100 opacity-10" style={{
           backgroundImage: 'radial-gradient(circle at 75% 25%, rgba(255,255,255,0.15) 0%, transparent 50%)',
         }} />
         <div className="container position-relative py-5 text-center">
-          <span className="d-inline-block bg-white/10 text-white rounded-pill px-3 py-1 mb-3 fs-6 fw-semibold">Fonctionnalités</span>
+          <span className="d-inline-block bg-white bg-opacity-10 text-white rounded-pill px-3 py-1 mb-3 fs-6 fw-semibold">Fonctionnalités</span>
           <h1 className="display-4 fw-bold mb-3">Tout ce qu'il vous faut</h1>
-          <p className="lead text-white/75 mx-auto" style={{ maxWidth: 600 }}>
+          <p className="lead text-white text-opacity-75 mx-auto" style={{ maxWidth: 600 }}>
             Découvrez comment MADINDA peut transformer votre gestion financière familiale.
           </p>
         </div>
@@ -115,7 +115,7 @@ export default function FeaturesPage() {
                 <div className="card border-0 h-100 p-4" style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
                   <div className="d-flex gap-4">
                     <div className="flex-shrink-0">
-                      <div className="bg-primary/10 text-primary rounded-3 d-flex align-items-center justify-content-center" style={{ width: 60, height: 60, fontSize: '1.75rem' }}>
+                      <div className="bg-primary bg-opacity-10 text-primary rounded-3 d-flex align-items-center justify-content-center" style={{ width: 60, height: 60, fontSize: '1.75rem' }}>
                         {f.icon}
                       </div>
                     </div>

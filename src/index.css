@@ -1,4 +1,3 @@
-@import "tailwindcss";
 @import "bootstrap/dist/css/bootstrap.min.css";
 
 :root {
@@ -37,4 +36,55 @@
   --shadow: 0 1px 3px rgba(0,0,0,0.3);
   --shadow-lg: 0 4px 12px rgba(0,0,0,0.3);
   --shadow-xl: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+/* ===== Custom utility classes (replacing Tailwind) ===== */
+
+/* Gradients */
+.hero-gradient {
+  background: linear-gradient(135deg, #312e81, #581c87, #0f172a);
+}
+.stats-gradient {
+  background: linear-gradient(135deg, #6366f1, #1e293b);
+}
+.gradient-violet {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+.gradient-blue {
+  background: linear-gradient(135deg, #3b82f6, #0891b2);
+}
+.gradient-emerald {
+  background: linear-gradient(135deg, #10b981, #0d9488);
+}
+.gradient-purple-pink {
+  background: linear-gradient(135deg, #a855f7, #ec4899);
+}
+
+/* Backdrop blur */
+.backdrop-blur-sm {
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* Card hover transition */
+.card-hover-shadow {
+  transition: box-shadow 0.2s ease;
+}
+.card-hover-shadow:hover {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+/* Flex-grow-1 alias (Bootstrap already has this but just in case) */
+
+/* Opacity aliases for Bootstrap (5.3+ already supports these) */
+/* bg-opacity-*, text-opacity-*, border-opacity-* are already in Bootstrap */
+
+/* Smooth rotate for FAQ */
+.rotate-transition {
+  transition: transform 0.3s;
+}
+
+/* Hover scale button */
+.btn-hover-scale:hover {
+  transform: scale(1.05);
 }

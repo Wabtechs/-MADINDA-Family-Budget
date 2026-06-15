@@ -147,7 +147,7 @@ export default function ExpensesPage() {
         <div className="col-md-4">
           <div className="card border-0 shadow-sm bg-danger text-white">
             <div className="card-body text-center py-3">
-              <div className="text-white/75 small text-uppercase fw-semibold">Total (filtr&eacute;)</div>
+              <div className="text-white text-opacity-75 small text-uppercase fw-semibold">Total (filtr&eacute;)</div>
               <div className="fs-3 fw-bold">&euro;{totalMonth.toFixed(2)}</div>
             </div>
           </div>
@@ -253,7 +253,7 @@ export default function ExpensesPage() {
                   <tr key={exp.id}>
                     <td className="text-nowrap small">{new Date(exp.date).toLocaleDateString('fr-FR')}</td>
                     <td className="small">{exp.description || '-'}</td>
-                    <td><span className="badge bg-danger/10 text-danger">{exp.category_name || '-'}</span></td>
+                    <td><span className="badge bg-danger bg-opacity-10 text-danger">{exp.category_name || '-'}</span></td>
                     <td className="small">{exp.account_name || '-'}</td>
                     <td className="text-end fw-bold text-danger">&euro;{exp.amount.toFixed(2)}</td>
                     <td className="text-end">

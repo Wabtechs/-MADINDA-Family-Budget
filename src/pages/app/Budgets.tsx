@@ -157,7 +157,7 @@ export default function BudgetsPage() {
         <div className="col-md-4">
           <div className="card border-0 shadow-sm bg-primary text-white">
             <div className="card-body text-center py-3">
-              <div className="text-white/75 small text-uppercase fw-semibold">Budget total</div>
+              <div className="text-white text-opacity-75 small text-uppercase fw-semibold">Budget total</div>
               <div className="fs-3 fw-bold">&euro;{totalBudgeted.toFixed(2)}</div>
             </div>
           </div>
@@ -165,7 +165,7 @@ export default function BudgetsPage() {
         <div className="col-md-4">
           <div className="card border-0 shadow-sm bg-warning text-white">
             <div className="card-body text-center py-3">
-              <div className="text-white/75 small text-uppercase fw-semibold">D&eacute;pens&eacute;</div>
+              <div className="text-white text-opacity-75 small text-uppercase fw-semibold">D&eacute;pens&eacute;</div>
               <div className="fs-3 fw-bold">&euro;{totalSpent.toFixed(2)}</div>
             </div>
           </div>
@@ -173,7 +173,7 @@ export default function BudgetsPage() {
         <div className="col-md-4">
           <div className={`card border-0 shadow-sm text-white ${totalBudgeted - totalSpent >= 0 ? 'bg-success' : 'bg-danger'}`}>
             <div className="card-body text-center py-3">
-              <div className="text-white/75 small text-uppercase fw-semibold">Restant</div>
+              <div className="text-white text-opacity-75 small text-uppercase fw-semibold">Restant</div>
               <div className="fs-3 fw-bold">&euro;{(totalBudgeted - totalSpent).toFixed(2)}</div>
             </div>
           </div>
@@ -198,7 +198,7 @@ export default function BudgetsPage() {
                     <div className="d-flex justify-content-between align-items-start mb-2">
                       <div>
                         <h6 className="fw-bold mb-0">{budget.name}</h6>
-                        <span className="badge bg-secondary/10 text-secondary" style={{ fontSize: '0.7rem' }}>{periodLabels[budget.period] || budget.period}</span>
+                        <span className="badge bg-secondary bg-opacity-10 text-secondary" style={{ fontSize: '0.7rem' }}>{periodLabels[budget.period] || budget.period}</span>
                       </div>
                       <span className={`badge ${pct >= 100 ? 'bg-danger' : pct >= 80 ? 'bg-warning' : 'bg-success'}`}>{label}</span>
                     </div>

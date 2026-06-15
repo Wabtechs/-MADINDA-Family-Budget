@@ -32,7 +32,7 @@ export default function AppLayout() {
       {/* Sidebar overlay */}
       {sidebarOpen && (
         <div
-          className="position-fixed top-0 start-0 w-100 h-100 bg-black/50"
+          className="position-fixed top-0 start-0 w-100 h-100 bg-black bg-opacity-50"
           style={{ zIndex: 1040 }}
           onClick={() => setSidebarOpen(false)}
         />

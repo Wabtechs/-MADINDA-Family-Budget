@@ -112,7 +112,7 @@ export default function TransfersPage() {
               <div className="card border-0 shadow-sm">
                 <div className="card-body">
                   <div className="d-flex align-items-center gap-3">
-                    <div className="rounded-circle bg-info/10 d-flex align-items-center justify-content-center" style={{ width: 40, height: 40 }}>
+                    <div className="rounded-circle bg-info bg-opacity-10 d-flex align-items-center justify-content-center" style={{ width: 40, height: 40 }}>
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <line x1="12" y1="5" x2="12" y2="19" /><polyline points="19 12 12 19 5 12" />
                       </svg>
